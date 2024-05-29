@@ -1,0 +1,119 @@
+<template>
+  <div class="container">
+    <div class="header">
+      <div v-for="item in headerList" :key="item" class="header-item">{{ item }}</div>
+    </div>
+    <div class="flex h-full">
+      <div class="side">
+        <div
+          v-for="item in sideList"
+          :key="item.name"
+          :class="['side-item', activeName == item.name && 'active']"
+        >
+          <img v-if="item.icon" :src="item.icon" />
+          <div class="side-item-name">{{ item.name }}</div>
+        </div>
+      </div>
+      <div class="flex flex-1">
+        <div class="flex-1">
+          <div class="flex">
+            <Panel icon="info" class="flex-1" title="资讯">{{ msg }}</Panel>
+            <Panel icon="notice" class="flex-1" title="公告">{{ msg }}</Panel>
+          </div>
+          <div>
+            <EchartElm />
+          </div>
+        </div>
+        <div class="shrink-0"><listElm /></div>
+        <div class="real">3</div>
+      </div>
+    </div>
+  </div>
+</template>
+<script setup>
+import { ref } from 'vue'
+import Panel from './component/Panel.vue'
+import Next from '@/assets/next.svg'
+import EchartElm from './component/echart.vue'
+import listElm from './list/index.vue'
+import App from '@/App.vue'
+const headerList = ['系统', '报价', '行情', '分析', '职能', '工具', '资讯', '帮助', '决策']
+const sideList = [
+  {
+    icon: '',
+    name: '首页'
+  },
+  {
+    icon: Next,
+    name: '应用'
+  },
+  {
+    icon: '',
+    name: '分时图'
+  },
+  {
+    icon: '',
+    name: 'K线图'
+  },
+  {
+    icon: '',
+    name: '个股资料'
+  },
+  {
+    icon: '',
+    name: '自选股'
+  },
+  {
+    icon: '',
+    name: '综合排名'
+  },
+  {
+    icon: '',
+    name: '牛叉诊股'
+  },
+  {
+    icon: '',
+    name: '超级盘口 '
+  }
+]
+const activeName = ref('K线图')
+const msg = '这里是公告这里是公告这里是公告这里是公告'
+</script>
+<style lang="less" scoped>
+.container {
+  height: calc(100vh - 32px);
+  position: relative;
+}
+.header {
+  position: absolute;
+  top: -32px;
+  height: 32px;
+  line-height: 32px;
+  padding-left: 8px;
+  display: flex;
+  color: #999999;
+  &-item {
+    margin-right: 12px;
+  }
+}
+.side {
+  width: 22px;
+  color: #999999;
+  &-item {
+    width: 22px;
+    word-wrap: break-word;
+    background: #33353e;
+    border: 1px solid #000000;
+    padding: 8px 0;
+    line-height: 16px;
+    text-align: center;
+    &.active {
+      color: #000000;
+      background: #efc394;
+    }
+  }
+  &-item + &-item {
+    border-top: 0;
+  }
+}
+</style>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="16px" height="16px" viewBox="0 0 16 16" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>icon/16/资讯</title>
+    <g id="页面-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="交易页面" transform="translate(-34, -37)">
+            <g id="编组-12" transform="translate(22, 32)">
+                <g id="icon/16/资讯" transform="translate(13, 6)">
+                    <path d="M14.0000375,7 C14.0000375,10.8660024 10.8660272,14 7.00002575,14 C4.90929724,14 1.77635684e-15,14 1.77635684e-15,14 C1.77635684e-15,14 1.77635684e-15,8.77527595 1.77635684e-15,7 C1.77635684e-15,3.13400713 3.13402426,-8.8817842e-16 7.00002575,-8.8817842e-16 C10.8660272,-8.8817842e-16 14.0000375,3.13400713 14.0000375,7 Z" id="路径" fill="#EFC394" fill-rule="nonzero"></path>
+                    <g id="编组" transform="translate(3.4, 4)" stroke="#000000" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="4.54747919e-13" y1="0.2000001" x2="7.2000108" y2="0.2000001" id="路径"></line>
+                        <line x1="4.54747919e-13" y1="3.20000085" x2="7.2000108" y2="3.20000085" id="路径"></line>
+                        <line x1="0" y1="6.2000016" x2="4.000006" y2="6.2000016" id="路径"></line>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

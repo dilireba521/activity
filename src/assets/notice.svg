@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="16px" height="16px" viewBox="0 0 16 16" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>icon/16/资讯</title>
+    <g id="页面-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="交易页面" transform="translate(-674, -37)" fill="#EFC394" fill-rule="nonzero">
+            <g id="编组-12备份" transform="translate(662, 32)">
+                <g id="编组" transform="translate(13, 6)">
+                    <path d="M1,3.0625 L2.51121076,3.0625 L2.51121076,3.0625 L2.51121076,10.9375 L1,10.9375 C0.44771525,10.9375 3.38176876e-17,10.4897847 0,9.9375 L0,4.0625 C-2.8967998e-16,3.51021525 0.44771525,3.0625 1,3.0625 Z" id="矩形"></path>
+                    <path d="M2.51121076,3.0625 L7.05659019,0.742462584 C7.54850204,0.491382575 8.15081596,0.68661536 8.40189597,1.17852722 C8.47374851,1.31929954 8.51121076,1.47509832 8.51121076,1.63314779 L8.51121076,12.3668522 C8.51121076,12.919137 8.06349551,13.3668522 7.51121076,13.3668522 C7.3531613,13.3668522 7.19736251,13.32939 7.05659019,13.2575374 L2.51121076,10.9375 L2.51121076,10.9375" id="路径"></path>
+                    <line x1="10.2009619" y1="3.25" x2="11.7990381" y2="2.75" id="路径" stroke="#EFC394" stroke-linecap="round" stroke-linejoin="round"></line>
+                    <line x1="10" y1="7" x2="13" y2="7" id="路径" stroke="#EFC394" stroke-linecap="round" stroke-linejoin="round"></line>
+                    <line x1="10.2009619" y1="10.75" x2="11.7990381" y2="11.25" id="路径" stroke="#EFC394" stroke-linecap="round" stroke-linejoin="round"></line>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

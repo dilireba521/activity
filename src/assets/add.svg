@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="64px" height="64px" viewBox="0 0 64 64" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>编组 2</title>
+    <g id="页面-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round">
+        <g id="后台操作" transform="translate(-1160, -789)" stroke="#9C9C9C" stroke-width="4">
+            <g id="编组-2" transform="translate(1162, 791)">
+                <line x1="60" y1="30" x2="0" y2="30" id="路径"></line>
+                <line x1="30" y1="60" x2="30" y2="0" id="路径"></line>
+            </g>
+        </g>
+    </g>
+</svg>

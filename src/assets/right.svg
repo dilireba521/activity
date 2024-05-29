@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="12px" height="12px" viewBox="0 0 12 12" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>icon/16/向左</title>
+    <g id="页面-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="交易页面" transform="translate(-30, -236)" fill="#999999">
+            <g id="编组-18" transform="translate(22, 232)">
+                <g id="编组-13" transform="translate(8, 0)">
+                    <g id="编组" transform="translate(1.5, 6)">
+                        <polygon id="三角形" transform="translate(5.5, 4) rotate(-270) translate(-5.5, -4)" points="5.5 2.5 9.5 5.5 1.5 5.5"></polygon>
+                        <rect id="矩形" x="0" y="2" width="5" height="4"></rect>
+                        <rect id="矩形" x="8" y="0" width="1" height="8"></rect>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

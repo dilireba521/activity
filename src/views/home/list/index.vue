@@ -14,11 +14,20 @@
       <rankElm :dataSource="rankData.sell" type="sell" />
       <rankElm :dataSource="rankData.buy" type="buy" />
     </div>
+    <!-- overview -->
+    <overviewElm></overviewElm>
+    <!-- order -->
+    <orderElm :dataSource="orderData"></orderElm>
+    <!-- orderlarge -->
+    <orderlargeElm :dataSource="orderlargeData"></orderlargeElm>
   </div>
 </template>
 <script setup>
 import { ref, reactive } from 'vue'
 import rankElm from './component/rank.vue'
+import overviewElm from './component/overview.vue'
+import orderElm from './component/order.vue'
+import orderlargeElm from './component/orderlarge.vue'
 const rankData = reactive({
   sell: [
     {
@@ -65,12 +74,44 @@ const rankData = reactive({
     }
   ]
 })
+// order
+const orderData = ref([
+  {
+    time: '13:20',
+    price: '100',
+    value: '100',
+    number: '100'
+  },
+  {
+    time: '13:20',
+    price: '100',
+    value: '80',
+    number: '100'
+  },
+  {
+    time: '13:20',
+    price: '100',
+    value: '90',
+    number: '100'
+  }
+])
+
+// orderlarge
+const orderlargeData = ref([
+  {
+    time: '00:00:00',
+    price: '100',
+    number: '100'
+  }
+])
 </script>
 <style lang="less" scoped>
 .box {
   width: 250px;
   .header {
     padding: 20px 32px 4px 32px;
+    border-top: 1px solid #473a2c;
+    border-bottom: 1px solid #473a2c;
     &-name {
       font-weight: 500;
       font-size: 24px;

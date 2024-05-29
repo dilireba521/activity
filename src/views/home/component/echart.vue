@@ -10,7 +10,7 @@
       <div class="mr-8 text-third">5分线</div>
       <div class="text-secondary">虾米股份</div>
     </div>
-    <div ref="curEchart" style="height: 790px"></div>
+    <div ref="curEchart" style="height: 794px"></div>
   </div>
 </template>
 <script setup>
@@ -173,6 +173,8 @@ onMounted(() => {
 <style lang="less" scoped>
 .box {
   background: #101014;
+  border-right: 1px solid #473a2c;
+  border-bottom: 1px solid #473a2c;
 }
 .scale {
   font-size: 14px;

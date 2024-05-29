@@ -15,8 +15,14 @@
 .flex-1 {
   flex: 1;
 }
+.pl-4 {
+  padding-left: 4px;
+}
 .pl-8 {
   padding-left: 8px;
+}
+.pr-8 {
+  padding-right: 8px;
 }
 
 .ml-8 {

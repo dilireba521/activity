@@ -54,7 +54,7 @@ const curIcon = computed(() => {
     }
   }
   &-body {
-    height: 140px;
+    height: 172px;
     padding: 16px;
   }
 }

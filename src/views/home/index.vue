@@ -25,7 +25,7 @@
           </div>
         </div>
         <div class="shrink-0"><listElm /></div>
-        <div class="real">3</div>
+        <div class="shrink-0"><orderElm></orderElm></div>
       </div>
     </div>
   </div>
@@ -36,7 +36,8 @@ import Panel from './component/Panel.vue'
 import Next from '@/assets/next.svg'
 import EchartElm from './component/echart.vue'
 import listElm from './list/index.vue'
-import App from '@/App.vue'
+import orderElm from './order/index.vue'
+
 const headerList = ['系统', '报价', '行情', '分析', '职能', '工具', '资讯', '帮助', '决策']
 const sideList = [
   {

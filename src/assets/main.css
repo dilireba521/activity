@@ -3,11 +3,17 @@
 .flex {
   display: flex;
 }
+.justify-center {
+  justify-content: center;
+}
+.items-center {
+  align-items: center;
+}
 .shrink-0 {
   flex-shrink: 0;
 }
-.h-full {
-  height: 100%;
+.w-full {
+  width: 100%;
 }
 .h-full {
   height: 100%;
@@ -54,6 +60,10 @@
 }
 .text-yellow {
   color: #efc394ff;
+}
+
+.text-gray {
+  color: #d8d8d8ff;
 }
 
 .leading-20 {

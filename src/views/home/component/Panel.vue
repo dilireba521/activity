@@ -13,8 +13,8 @@
 import { computed } from 'vue'
 import Notice from '@/assets/notice.svg'
 import Info from '@/assets/info.svg'
-// import Notice from "@/assets/notice.vue"
-// import Notice from "@/assets/notice.vue"
+import Answer from '@/assets/answer.svg'
+import Question from '@/assets/question.svg'
 const props = defineProps({
   title: {
     type: String,
@@ -26,6 +26,8 @@ const props = defineProps({
   }
 })
 const iconMap = {
+  answer: Answer,
+  question: Question,
   notice: Notice,
   info: Info
 }
@@ -54,8 +56,10 @@ const curIcon = computed(() => {
     }
   }
   &-body {
-    height: 172px;
+    height: 170px;
     padding: 16px;
+    font-size: 20px;
+    line-height: 28px;
   }
 }
 </style>

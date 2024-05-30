@@ -60,6 +60,7 @@ const props = defineProps({
 </script>
 <style lang="less" scoped>
 .box {
+  height: 145px;
   display: flex;
   background: rgba(216, 216, 216, 0.1);
   font-weight: 400;

@@ -173,6 +173,7 @@ onMounted(() => {
 <style lang="less" scoped>
 .box {
   background: #101014;
+  border-left: 1px solid #473a2c;
   border-right: 1px solid #473a2c;
   border-bottom: 1px solid #473a2c;
 }

@@ -20,10 +20,9 @@ const props = defineProps({
 <style lang="less" scoped>
 .box {
   background: #101014;
-  border: 1px solid #473a2c;
-  border-left: 0;
-  border-right: 0;
-  height: 277px;
+  border-top: 1px solid #473a2c;
+  border-bottom: 1px solid #473a2c;
+  height: 276px;
   padding: 0 4px;
 }
 .title {

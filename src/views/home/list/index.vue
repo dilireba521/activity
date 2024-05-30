@@ -108,6 +108,8 @@ const orderlargeData = ref([
 <style lang="less" scoped>
 .box {
   width: 250px;
+
+  background: #101014;
   .header {
     padding: 20px 32px 4px 32px;
     border-top: 1px solid #473a2c;

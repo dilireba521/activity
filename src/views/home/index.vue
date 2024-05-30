@@ -16,9 +16,19 @@
       </div>
       <div class="flex flex-1">
         <div class="flex-1">
-          <div class="flex">
+          <div v-if="!showQuestion" class="flex">
             <Panel icon="info" class="flex-1" title="资讯">{{ msg }}</Panel>
             <Panel icon="notice" class="flex-1" title="公告">{{ msg }}</Panel>
+          </div>
+          <div v-else class="flex">
+            <Panel icon="question" class="flex-1" title="问题">
+              <div class="flex items-center justify-center w-full h-full">Q：{{ msg }}</div>
+            </Panel>
+            <Panel icon="answer" class="flex-1" title="选项">
+              <div class="flex items-center justify-center w-full h-full">
+                <div class="answer-item"></div>
+              </div>
+            </Panel>
           </div>
           <div>
             <EchartElm />
@@ -77,8 +87,27 @@ const sideList = [
     name: '超级盘口 '
   }
 ]
+const showQuestion = ref(true)
 const activeName = ref('K线图')
 const msg = '这里是公告这里是公告这里是公告这里是公告'
+const answerArr = ref([
+  {
+    name: 'A',
+    content: '这里是'
+  },
+  {
+    name: 'B',
+    content: '这里是选项'
+  },
+  {
+    name: 'C',
+    content: '这里是'
+  },
+  {
+    name: 'D',
+    content: '这里是'
+  }
+])
 </script>
 <style lang="less" scoped>
 .container {

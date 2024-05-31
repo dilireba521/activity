@@ -2,10 +2,7 @@
   <div class="box">
     <!-- header -->
     <div class="header">
-      <div class="header_time">当前游戏时间：00:00:00</div>
-      <div class="header_step">当前阶段：第一阶段</div>
-      <div class="header_next">距离下一阶段</div>
-      <div class="header_countdown">00:14:59</div>
+      <scheduleElm />
     </div>
     <!-- list  -->
     <div class="list">
@@ -40,6 +37,7 @@
   </div>
 </template>
 <script setup>
+import scheduleElm from './component/schedule.vue'
 const list = [
   {
     name: '01',
@@ -63,32 +61,7 @@ const list = [
   text-align: center;
   border-top: 1px solid #473a2c;
   border-right: 1px solid #473a2c;
-
   background: #101014;
-  &_time {
-    font-family: Roboto, Roboto;
-    font-weight: 400;
-    font-size: 24px;
-    line-height: 28px;
-  }
-  &_step {
-    font-size: 16px;
-    line-height: 22px;
-    margin-top: 4px;
-    margin-bottom: 24px;
-  }
-  &_next {
-    font-size: 16px;
-    color: rgba(255, 255, 255, 0.6);
-    line-height: 22px;
-  }
-  &_countdown {
-    font-family: Roboto, Roboto;
-    font-weight: bold;
-    font-size: 48px;
-    color: #ffffff;
-    line-height: 56px;
-  }
 }
 .list {
   border-top: 1px solid #473a2c;

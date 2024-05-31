@@ -11,6 +11,9 @@
     "format": "prettier --write src/"
   },
   "dependencies": {
+    "@vueuse/core": "^10.10.0",
+    "ant-design-vue": "4.x",
+    "dayjs": "^1.11.11",
     "echarts": "^5.5.0",
     "pinia": "^2.1.7",
     "vue": "^3.4.21",

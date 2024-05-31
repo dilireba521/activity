@@ -17,16 +17,26 @@
       <div class="flex flex-1">
         <div class="flex-1">
           <div v-if="!showQuestion" class="flex">
-            <Panel icon="info" class="flex-1" title="资讯">{{ msg }}</Panel>
-            <Panel icon="notice" class="flex-1" title="公告">{{ msg }}</Panel>
+            <Panel icon="info" class="flex-1" title="资讯">
+              <div class="p-16">{{ msg }}</div>
+            </Panel>
+            <Panel icon="notice" class="flex-1" title="公告">
+              <div class="p-16">{{ msg }}</div></Panel
+            >
           </div>
           <div v-else class="flex">
             <Panel icon="question" class="flex-1" title="问题">
               <div class="flex items-center justify-center w-full h-full">Q：{{ msg }}</div>
             </Panel>
             <Panel icon="answer" class="flex-1" title="选项">
-              <div class="flex items-center justify-center w-full h-full">
-                <div class="answer-item"></div>
+              <div class="flex items-center h-full">
+                <div class="answer">
+                  <div v-for="(item, i) in answerArr" :key="i" class="answer-item">
+                    <div :class="['answer-item_cont', item.answer && 'active']">
+                      {{ item.name }}：{{ item.content }}
+                    </div>
+                  </div>
+                </div>
               </div>
             </Panel>
           </div>
@@ -87,25 +97,29 @@ const sideList = [
     name: '超级盘口 '
   }
 ]
-const showQuestion = ref(true)
+const showQuestion = ref(false)
 const activeName = ref('K线图')
 const msg = '这里是公告这里是公告这里是公告这里是公告'
 const answerArr = ref([
   {
     name: 'A',
-    content: '这里是'
+    content: '这里是1',
+    answer: false
   },
   {
     name: 'B',
-    content: '这里是选项'
+    content: '这里是选项',
+    answer: false
   },
   {
     name: 'C',
-    content: '这里是'
+    content: '这里是',
+    answer: true
   },
   {
     name: 'D',
-    content: '这里是'
+    content: '这里是32345',
+    answer: false
   }
 ])
 </script>
@@ -144,6 +158,33 @@ const answerArr = ref([
   }
   &-item + &-item {
     border-top: 0;
+  }
+}
+.answer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 80%;
+  min-height: 65%;
+  flex-wrap: wrap;
+  margin: 0 auto;
+  &-item {
+    width: 50%;
+    flex-shrink: 0;
+    margin-bottom: 4px;
+    &_cont {
+      display: inline-block;
+      line-height: 46px;
+      padding: 0 20px;
+      height: 48px;
+      font-size: 20px;
+
+      border-radius: 4px;
+      &.active {
+        color: #000000;
+        background: #efc394;
+      }
+    }
   }
 }
 </style>

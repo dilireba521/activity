@@ -1,8 +1,18 @@
 <script setup>
 import { RouterLink, RouterView } from 'vue-router'
-import HelloWorld from './components/HelloWorld.vue'
+import { ConfigProvider } from 'ant-design-vue'
+const theme = {
+  token: {
+    colorPrimary: '#EFC394FF',
+    colorError: '#D87179FF',
+    colorBorder: '#979797',
+    colorSuccess: '#2BA169FF'
+  }
+}
 </script>
 
 <template>
-  <RouterView />
+  <ConfigProvider :theme="theme">
+    <RouterView />
+  </ConfigProvider>
 </template>

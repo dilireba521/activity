@@ -24,23 +24,124 @@
     </div>
     <div class="pt-40">
       <div class="title">资讯</div>
-      <div class="card"></div>
+      <Row :gutter="[16, 16]" style="height: 250px">
+        <Col :span="6">
+          <div class="card">
+            <cardElm title="资讯主题" detail="资讯主题资讯主题"></cardElm></div
+        ></Col>
+        <Col :span="6">
+          <div class="card">
+            <div class="flex items-center justify-center w-full h-full cursor-pointer">
+              <img :src="addIcon" @click="openEditInfo" />
+            </div>
+          </div>
+        </Col>
+      </Row>
     </div>
+    <div class="pt-40">
+      <div class="title">公告区（活动当前指引）</div>
+      <Row :gutter="[16, 16]" style="height: 250px">
+        <Col :span="6">
+          <div class="card active">
+            <cardElm title="当前指引" detail="资讯主题资讯主题"></cardElm></div
+        ></Col>
+        <Col :span="6">
+          <div class="card">
+            <div class="flex items-center justify-center w-full h-full cursor-pointer">
+              <img :src="addIcon" />
+            </div>
+          </div>
+        </Col>
+      </Row>
+    </div>
+    <div class="pt-40">
+      <PanelElm title="内幕交易阶段">
+        <Row :gutter="[8, 8]" style="height: 250px">
+          <Col :span="6">
+            <div class="card dark">
+              <cardElm title="问题一"> 22 </cardElm>
+            </div>
+          </Col>
+          <Col :span="6">
+            <div class="card dark">
+              <div class="flex items-center justify-center w-full h-full cursor-pointer">
+                <img :src="addIcon" @click="openEditQuestion" />
+              </div>
+            </div>
+          </Col>
+        </Row>
+      </PanelElm>
+    </div>
+    <div class="pt-40">
+      <div class="title">玩家预测</div>
+      <Row :gutter="[5, 5]" style="min-height: 846px">
+        <Col v-for="(items, index) in chunks" :key="index" :span="4">
+          <div class="forecast-list">
+            <div class="forecast-list_title">
+              <div class="forecast-list_number">玩家编号</div>
+              <div class="flex-1">预测价格</div>
+              <div>操作</div>
+            </div>
+            <div v-for="(item, i) in items" :key="i" class="forecast-list_item">
+              <div class="forecast-list_number">{{ item }}</div>
+              <div class="flex-1">335</div>
+              <div class="cursor-pointer text-yellow" @click="openEditForecast">编辑</div>
+            </div>
+          </div>
+        </Col>
+      </Row>
+    </div>
+    <!-- 玩家预测-编辑 -->
+    <editForecast ref="editForecastRef" />
+    <!-- 资讯-编辑、新增 -->
+    <editInfo ref="editInfoRef" />
+    <!-- 内幕交易阶段 -->
+    <editQuestion ref="editQuestionRef" />
   </div>
 </template>
 <script setup>
+import { ref } from 'vue'
 import scheduleElm from '@/views/home/order/component/schedule.vue'
-import { Button, Input, Textarea } from 'ant-design-vue'
+import cardElm from './component/card.vue'
+import addIcon from '@/assets/add.svg'
+import PanelElm from './component/panel.vue'
+import { Button, Input, Textarea, Row, Col } from 'ant-design-vue'
+import editForecast from './component/editForecast.vue'
+import editInfo from './component/editInfo.vue'
+import editQuestion from './component/editQuestion.vue'
+import { arrayChunks } from '@/utils/array.js'
+const arr = Array.from({ length: 120 }, (_, i) => i)
+const size = 20
+const chunks = arrayChunks(arr, size)
+// 玩家预测
+const editForecastRef = ref()
+function openEditForecast(params) {
+  editForecastRef.value.open = true
+}
+// 资讯
+const editInfoRef = ref()
+function openEditInfo(params) {
+  editInfoRef.value.open = true
+}
+
+// 内幕交易阶段
+const editQuestionRef = ref()
+function openEditQuestion(params) {
+  editQuestionRef.value.open = true
+}
 </script>
 <style lang="less" scoped>
 .card {
   background: #474951;
   border-radius: 4px;
   padding: 16px 16px 12px 16px;
+  height: 100%;
   &.active {
     background: #33353e;
-    border-radius: 4px;
     border: 1px solid #efc394;
+  }
+  &.dark {
+    background: #33353e;
   }
 }
 .container {
@@ -90,5 +191,31 @@ import { Button, Input, Textarea } from 'ant-design-vue'
   width: 428px;
   margin-bottom: 21px;
   margin-top: 4px;
+}
+.forecast-list {
+  &_title {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    background: #101014;
+    border-radius: 4px 4px 0px 0px;
+    height: 24px;
+    padding: 0 12px;
+    font-size: 14px;
+    line-height: 24px;
+  }
+  &_item {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 12px;
+    height: 42px;
+    line-height: 42px;
+    background: rgba(255, 255, 255, 0.1);
+    font-size: 16px;
+    color: #ffffff;
+  }
+  &_number {
+    width: 105px;
+  }
 }
 </style>

@@ -12,7 +12,7 @@ import Logo from '@/assets/logo.svg'
 </script>
 <style lang="less" scoped>
 .container {
-  height: 100vh;
+  // min-height: 100vh;
   .header {
     display: flex;
     align-items: center;

@@ -48,6 +48,7 @@
         <div class="shrink-0"><orderElm></orderElm></div>
       </div>
     </div>
+    <openElm />
   </div>
 </template>
 <script setup>
@@ -57,7 +58,7 @@ import Next from '@/assets/next.svg'
 import EchartElm from './component/echart.vue'
 import listElm from './list/index.vue'
 import orderElm from './order/index.vue'
-
+import openElm from './component/open.vue'
 const headerList = ['系统', '报价', '行情', '分析', '职能', '工具', '资讯', '帮助', '决策']
 const sideList = [
   {

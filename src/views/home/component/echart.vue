@@ -102,21 +102,30 @@ function initData() {
         },
         axisLabel: {
           showMaxLabel: true,
-
           textStyle: {
-            color: '#D1D4DC'
+            color: '#FFFFFF99'
           },
           margin: 20
         },
         axisLine: {
-          show: true // 隐藏坐标轴线
-        },
-        splitLine: {
-          show: true, // 显示刻度线
+          show: true, // 隐藏坐标轴线
           lineStyle: {
             type: 'dashed', // 设置线条类型为虚线
-            color: 'rgba(255, 255, 255, 0.1)'
+            color: 'rgba(255, 255, 255, 0.1)',
+            type: [5, 2],
+            dashOffset: 0
           }
+        },
+        splitLine: {
+          show: false // 显示刻度线
+        },
+        min: function (extent) {
+          const _max = Math.max(extent.max + Math.floor(extent.max / 2), 4)
+          return _max == 4 ? 0 : -1
+        },
+        max: function (extent) {
+          const _max = Math.max(extent.max + Math.floor(extent.max / 2), 4)
+          return _max
         }
       }
     ],
@@ -126,7 +135,7 @@ function initData() {
         position: 'right',
         axisLabel: {
           textStyle: {
-            color: '#D1D4DC'
+            color: '#FFFFFF99'
           },
           margin: 10
         },
@@ -137,7 +146,9 @@ function initData() {
           show: true, // 显示刻度线
           lineStyle: {
             type: 'dashed', // 设置线条类型为虚线
-            color: 'rgba(255, 255, 255, 0.1)'
+            color: 'rgba(255, 255, 255, 0.1)',
+            type: [2, 5],
+            dashOffset: -5
           }
         }
       }
@@ -146,6 +157,9 @@ function initData() {
       {
         name: 'BTC价格',
         type: 'candlestick',
+        itemStyle: {
+          borderWidth: 6
+        },
         data: [
           [20, 34, 10, 38],
           [40, 35, 30, 50],

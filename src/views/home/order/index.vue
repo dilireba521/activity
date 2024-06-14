@@ -2,7 +2,7 @@
   <div class="box">
     <!-- header -->
     <div class="header">
-      <scheduleElm />
+      <scheduleElm :dataSource="dataSource"/>
     </div>
     <!-- list  -->
     <div class="list">
@@ -14,9 +14,9 @@
             <div class="order_header_price">预测价格</div>
           </div>
           <div class="order_list">
-            <div class="item" v-for="(item, i) in list" :key="i">
-              <div class="name">{{ item.name }}</div>
-              <div class="price">{{ item.price }}</div>
+            <div class="item" v-for="(item, i) in listLeft" :key="i">
+              <div class="name">{{ item.user_id }}</div>
+              <div class="price">{{ item.prediction }}</div>
             </div>
           </div>
         </div>
@@ -26,9 +26,9 @@
             <div class="order_header_price">预测价格</div>
           </div>
           <div class="order_list">
-            <div class="item active" v-for="(item, i) in list" :key="i">
-              <div class="name">{{ item.name }}</div>
-              <div class="price">{{ item.price }}</div>
+            <div class="item active" v-for="(item, i) in listRight" :key="i">
+              <div class="name">{{ item.user_id }}</div>
+              <div class="price">{{ item.prediction }}</div>
             </div>
           </div>
         </div>
@@ -37,17 +37,24 @@
   </div>
 </template>
 <script setup>
+import { computed } from 'vue';
 import scheduleElm from './component/schedule.vue'
-const list = [
-  {
-    name: '01',
-    price: '98'
-  },
-  {
-    name: '02',
-    price: '98'
+const props = defineProps({
+  dataSource: {
+    type: Object,
+    default: () => { }
   }
-]
+})
+const currentIndex = computed(() => {
+  return props.dataSource?.rank?.findIndex(item => item.user_id == '当前价') || 0
+})
+const listLeft = computed(() => {
+  return props.dataSource?.rank?.slice(0, currentIndex.value) || []
+})
+const listRight = computed(() => {
+  return props.dataSource?.rank?.slice(currentIndex.value + 1) || []
+})
+
 </script>
 <style lang="less" scoped>
 .box {
@@ -55,6 +62,7 @@ const list = [
   padding-right: 4px;
   border-left: 1px solid #473a2c;
 }
+
 .header {
   padding: 24px 0 20px 0;
   color: #ffffff;
@@ -63,10 +71,12 @@ const list = [
   border-right: 1px solid #473a2c;
   background: #101014;
 }
+
 .list {
   border-top: 1px solid #473a2c;
   border-right: 1px solid #473a2c;
   border-bottom: 1px solid #473a2c;
+
   &_header {
     height: 28px;
     font-weight: 500;
@@ -78,11 +88,14 @@ const list = [
     background: #101014;
   }
 }
+
 .order {
   flex: 1;
-  & + & {
+
+  &+& {
     margin-left: 2px;
   }
+
   &_header {
     display: flex;
     justify-content: space-between;
@@ -92,15 +105,22 @@ const list = [
     line-height: 24px;
     font-size: 14px;
     color: rgba(0, 0, 0, 0.8);
+
     &.active {
       background: #20b26c;
     }
   }
+
   &_list {
+    overflow: auto;
     height: 780px;
     background: #101014;
+    &::-webkit-scrollbar {
+  display: none;
+}
   }
 }
+
 .item {
   padding: 0 16px;
   display: flex;
@@ -111,9 +131,11 @@ const list = [
   font-size: 18px;
   color: rgba(255, 255, 255, 0.8);
   line-height: 30px;
+
   .price {
     color: #ff5260;
   }
+
   &.active {
     .price {
       color: #20b26c;

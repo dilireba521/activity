@@ -5,11 +5,7 @@
     </div>
     <div class="flex h-full">
       <div class="side">
-        <div
-          v-for="item in sideList"
-          :key="item.name"
-          :class="['side-item', activeName == item.name && 'active']"
-        >
+        <div v-for="item in sideList" :key="item.name" :class="['side-item', activeName == item.name && 'active']">
           <img v-if="item.icon" :src="item.icon" />
           <div class="side-item-name">{{ item.name }}</div>
         </div>
@@ -17,23 +13,23 @@
       <div class="flex flex-1">
         <div class="flex-1">
           <div v-if="!showQuestion" class="flex">
-            <Panel icon="info" class="flex-1" title="资讯">
-              <div class="p-16">{{ msg }}</div>
+            <Panel icon="info" class="flex-1" :title="dataSource?.zx?.title || '资讯'">
+              <div class="p-16">{{ dataSource?.zx?.content }}</div>
             </Panel>
-            <Panel icon="notice" class="flex-1" title="公告">
-              <div class="p-16">{{ msg }}</div></Panel
-            >
+            <Panel icon="notice" class="flex-1" :title="dataSource?.notice?.title || '公告'">
+              <div class="p-16">{{ dataSource?.notice?.content }}</div>
+            </Panel>
           </div>
           <div v-else class="flex">
-            <Panel icon="question" class="flex-1" title="问题">
-              <div class="flex items-center justify-center w-full h-full">Q：{{ msg }}</div>
+            <Panel icon="question" class="flex-1" :title="dataSource?.question?.title || '问题'">
+              <div class="flex items-center justify-center w-full h-full">Q：{{ dataSource?.question?.content }}</div>
             </Panel>
             <Panel icon="answer" class="flex-1" title="选项">
-              <div class="flex items-center h-full">
+              <div v-if="dataSource?.question?.options" class="flex items-center h-full">
                 <div class="answer">
-                  <div v-for="(item, i) in answerArr" :key="i" class="answer-item">
-                    <div :class="['answer-item_cont', item.answer && 'active']">
-                      {{ item.name }}：{{ item.content }}
+                  <div v-for="(item, i) in dataSource?.question?.options" :key="item.id" class="answer-item">
+                    <div :class="['answer-item_cont', item.isAnswer && 'active']">
+                      {{ item.title }}：{{ item.content }}
                     </div>
                   </div>
                 </div>
@@ -41,24 +37,56 @@
             </Panel>
           </div>
           <div>
-            <EchartElm />
+            <EchartElm :dataSource="dataSource?.kline"/>
           </div>
         </div>
-        <div class="shrink-0"><listElm /></div>
-        <div class="shrink-0"><orderElm></orderElm></div>
+        <div class="shrink-0">
+          <listElm />
+        </div>
+        <div class="shrink-0">
+          <orderElm :dataSource="dataSource"></orderElm>
+        </div>
       </div>
     </div>
     <openElm />
   </div>
 </template>
 <script setup>
-import { ref } from 'vue'
+import { computed,  ref } from 'vue'
 import Panel from './component/Panel.vue'
 import Next from '@/assets/next.svg'
 import EchartElm from './component/echart.vue'
 import listElm from './list/index.vue'
 import orderElm from './order/index.vue'
 import openElm from './component/open.vue'
+import { useWebSocket } from '@vueuse/core'
+
+// 信息集合
+const dataSource = ref()
+const { status, data, send, open, close } = useWebSocket('ws://192.168.0.102:8000/rank/', {
+  onMessage: (ws, event) => {
+    // console.log("event==",event);
+    dataSource.value = JSON.parse(event.data)
+
+    console.log("dataSource.value---", dataSource.value);
+  },
+  onConnected: (ws) => {
+    console.log('WebSocket onConnected', ws)
+  },
+  onError: (ws, event) => {
+    console.log('WebSocket onError', ws, event)
+  },
+  // onDisconnected: (ws,event) => {
+  //   // close()
+  //   console.error('onDisconnected 发生错误:', ws,event)
+  // },
+})
+
+const showQuestion = computed(() => {
+  return dataSource.value?.question?.content
+})
+
+
 const headerList = ['系统', '报价', '行情', '分析', '职能', '工具', '资讯', '帮助', '决策']
 const sideList = [
   {
@@ -98,37 +126,19 @@ const sideList = [
     name: '超级盘口 '
   }
 ]
-const showQuestion = ref(false)
 const activeName = ref('K线图')
-const msg = '这里是公告这里是公告这里是公告这里是公告'
-const answerArr = ref([
-  {
-    name: 'A',
-    content: '这里是1',
-    answer: false
-  },
-  {
-    name: 'B',
-    content: '这里是选项',
-    answer: false
-  },
-  {
-    name: 'C',
-    content: '这里是',
-    answer: true
-  },
-  {
-    name: 'D',
-    content: '这里是32345',
-    answer: false
-  }
-])
+
+window.addEventListener('beforeunload', function () {
+  close()
+})
+
 </script>
 <style lang="less" scoped>
 .container {
   height: calc(100vh - 32px);
   position: relative;
 }
+
 .header {
   position: absolute;
   top: -32px;
@@ -137,13 +147,16 @@ const answerArr = ref([
   padding-left: 8px;
   display: flex;
   color: #999999;
+
   &-item {
     margin-right: 12px;
   }
 }
+
 .side {
   width: 22px;
   color: #999999;
+
   &-item {
     width: 22px;
     word-wrap: break-word;
@@ -152,15 +165,18 @@ const answerArr = ref([
     padding: 8px 0;
     line-height: 16px;
     text-align: center;
+
     &.active {
       color: #000000;
       background: #efc394;
     }
   }
-  &-item + &-item {
+
+  &-item+&-item {
     border-top: 0;
   }
 }
+
 .answer {
   display: flex;
   justify-content: center;
@@ -169,10 +185,12 @@ const answerArr = ref([
   min-height: 65%;
   flex-wrap: wrap;
   margin: 0 auto;
+
   &-item {
     width: 50%;
     flex-shrink: 0;
     margin-bottom: 4px;
+
     &_cont {
       display: inline-block;
       line-height: 46px;
@@ -181,11 +199,11 @@ const answerArr = ref([
       font-size: 20px;
 
       border-radius: 4px;
+
       &.active {
         color: #000000;
         background: #efc394;
       }
     }
   }
-}
-</style>
+}</style>

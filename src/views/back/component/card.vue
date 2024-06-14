@@ -40,6 +40,10 @@ const props = defineProps({
   detail: {
     type: String,
     default: ''
+  },
+  record: {
+    type: Object,
+    default: () => ({})
   }
 })
 

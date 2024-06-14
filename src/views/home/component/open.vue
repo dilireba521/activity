@@ -16,6 +16,7 @@
 import { computed, ref, watch } from 'vue'
 import { useTimestamp, useDateFormat } from '@vueuse/core'
 import { diffTime2 } from '@/utils/dateUtil'
+import Logo from '@/assets/logo.svg'
 
 const { timestamp, pause } = useTimestamp({ controls: true })
 const format = useDateFormat(timestamp, 'YYYY年MM月DD日 HH:mm:ss')

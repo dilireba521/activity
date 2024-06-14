@@ -16,7 +16,16 @@
 <script setup>
 import * as echarts from 'echarts'
 import Right from '@/assets/right.svg'
-import { ref, onMounted, nextTick } from 'vue'
+import { ref, onMounted, nextTick, watch } from 'vue'
+import { useDateFormat } from '@vueuse/core'
+
+const props = defineProps({
+  dataSource: {
+    type: Object,
+    default: () => { }
+  }
+})
+
 const list = [
   {
     label: '分时',
@@ -67,10 +76,18 @@ const list = [
     value: 'setting'
   }
 ]
+var myChart = null
 const cur = ref('5min')
 const curEchart = ref()
 function initData() {
-  var myChart = echarts.init(curEchart.value)
+  if (!myChart)
+    myChart = echarts.init(curEchart.value)
+  const _datax = [], _data = [];
+  props.dataSource?.forEach((item) => {
+    const _time = useDateFormat(item.create_time,'HH:mm')
+    _datax.push(_time.value)
+    _data.push([item.close, item.open, item.high, item.low])
+  })
   myChart.setOption({
     grid: {
       left: '2%',
@@ -80,20 +97,7 @@ function initData() {
     xAxis: [
       {
         type: 'category',
-        data: [
-          '2017-10-24',
-          '2017-10-25',
-          '2017-10-26',
-          '2017-10-27',
-          '2017-10-24',
-          '2017-10-25',
-          '2017-10-26',
-          '2017-10-27',
-          '2017-10-24',
-          '2017-10-25',
-          '2017-10-26',
-          '2017-10-27'
-        ],
+        data: _datax,
         axisPointer: {
           type: 'shadow'
         },
@@ -102,9 +106,9 @@ function initData() {
         },
         axisLabel: {
           showMaxLabel: true,
-          textStyle: {
-            color: '#FFFFFF99'
-          },
+          // textStyle: {
+          //   color: '#FFFFFF99'
+          // },
           margin: 20
         },
         axisLine: {
@@ -134,9 +138,9 @@ function initData() {
         type: 'value',
         position: 'right',
         axisLabel: {
-          textStyle: {
-            color: '#FFFFFF99'
-          },
+          // textStyle: {
+          //   color: '#FFFFFF99'
+          // },
           margin: 10
         },
         axisLine: {
@@ -158,30 +162,22 @@ function initData() {
         name: 'BTC价格',
         type: 'candlestick',
         itemStyle: {
-          borderWidth: 6
+          // borderWidth: 6
         },
-        data: [
-          [20, 34, 10, 38],
-          [40, 35, 30, 50],
-          [31, 38, 33, 44],
-          [38, 15, 5, 42],
-          [20, 34, 10, 38],
-          [40, 35, 30, 50],
-          [31, 38, 33, 44],
-          [38, 15, 5, 42],
-          [20, 34, 10, 38],
-          [40, 35, 30, 50],
-          [31, 38, 33, 44],
-          [38, 15, 5, 42]
-        ]
+        data: _data
       }
     ]
   })
 }
-onMounted(() => {
+watch(() => props.dataSource, () => {
   nextTick(() => {
     initData()
   })
+})
+onMounted(()=>{
+  window.onresize = function () {
+    myChart?.resize()
+  }
 })
 </script>
 <style lang="less" scoped>
@@ -191,11 +187,13 @@ onMounted(() => {
   border-right: 1px solid #473a2c;
   border-bottom: 1px solid #473a2c;
 }
+
 .scale {
   font-size: 14px;
   color: #999999;
   line-height: 20px;
   padding: 0 4px;
+
   &.active {
     color: #000000;
     background: #efc394;

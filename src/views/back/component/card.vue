@@ -22,7 +22,10 @@
           @click="handleClick({ action: 'edit' })"
           >编辑</Button
         >
-        <Button class="btn" size="small" type="primary" @click="handleClick({ action: 'submit' })">
+        <Button v-if="hasCancel" class="btn" size="small" type="primary" @click="handleClick({ action: 'cancel' })">
+          <div class="text-black">取消发布</div>
+        </Button>
+        <Button v-else class="btn" size="small" type="primary" @click="handleClick({ action: 'submit' })">
           <div class="text-black">发布</div>
         </Button>
       </div>
@@ -33,6 +36,7 @@
 import { Button } from 'ant-design-vue'
 import { useSlots } from 'vue'
 const props = defineProps({
+  hasCancel: Boolean,
   title: {
     type: String,
     default: 'title'
@@ -86,6 +90,7 @@ const slotDefault = !!useSlots().default
     font-size: 16px;
     line-height: 24px;
     flex: 1;
+    word-break: break-all;
   }
   .btns {
     display: flex;

@@ -1,16 +1,16 @@
 <template>
   <Modal width="430px" :closable="false" v-model:open="open" title="预测修改">
-    <Form class="form">
-      <Form.Item label="玩家编号">01</Form.Item>
-      <Form.Item label="当前预测">300</Form.Item>
-      <Form.Item label="预测修改">
-        <Input placeholder="请输入" />
+    <Form ref="formRef" v-bind="formItemLayout" :model="formState"  class="form">
+      <Form.Item label="玩家编号">{{ formState.user_id }}</Form.Item>
+      <Form.Item label="当前预测">{{ formState.predictionOld }}</Form.Item>
+      <Form.Item  name="prediction"  :required="true" label="预测修改">
+        <Input type="number" v-model:value="formState.prediction" placeholder="请输入" />
       </Form.Item>
     </Form>
     <template #footer>
       <div class="flex justify-center pt-40">
         <Button @click="close">取消</Button>
-        <Button type="primary">
+        <Button :loading="loading" type="primary" @click="onSubmit">
           <div class="text-black">保存</div>
         </Button>
       </div>
@@ -18,9 +18,22 @@
   </Modal>
 </template>
 <script setup>
-import { Modal, Form, Input, Button } from 'ant-design-vue'
-import { ref } from 'vue'
+import { Modal, Form, Input, Button, message } from 'ant-design-vue'
+import { ref, reactive, watch, toRaw } from 'vue'
+import { useMyFetch } from '@/utils/fetch.js'
 
+const emit = defineEmits(['success'])
+
+const formItemLayout = {
+  labelCol: {
+    xs: { span: 24 },
+    sm: { span: 8 },
+  },
+  wrapperCol: {
+    xs: { span: 24 },
+    sm: { span: 20 },
+  },
+};
 const open = ref(false)
 const props = defineProps({
   record: {
@@ -28,6 +41,49 @@ const props = defineProps({
     default: () => ({})
   }
 })
+const loading = ref(false)
+const formRef = ref();
+const formState = reactive({
+  user_id: '',
+  predictionOld: '',
+  prediction: '',
+})
+watch(open, (cur) => {
+  formRef.value?.resetFields();
+  formState.user_id = ''
+  formState.predictionOld = ''
+  formState.prediction = ''
+  if (cur) {
+    console.log(props.record);
+    if (props.record?.user_id) {
+      formState.user_id = props.record.user_id
+      formState.predictionOld = props.record.prediction
+    }
+  }
+})
+function onSubmit() {
+  formRef.value
+    .validate()
+    .then(() => {
+      console.log('values', formState, toRaw(formState));
+      const _params = {
+        type:'change',
+        ...toRaw(formState)
+      }
+      postPredictionFn(_params)
+    })
+    .catch(error => {
+      console.log('error', error);
+    });
+}
+async function postPredictionFn(params) {
+  loading.value = true
+  const { data } = await useMyFetch('/games/prediction/').post(params).json()
+  loading.value = false
+  open.value = false
+  message.success('操作成功！')
+  emit('success')
+}
 function close() {
   open.value = false
 }
@@ -37,7 +93,7 @@ defineExpose({
 </script>
 <style lang="less" scoped>
 .form {
-  width: 230px;
+  width: 250px;
   margin: 0 auto;
 }
 </style>

@@ -20,7 +20,7 @@ import Logo from '@/assets/logo.svg'
 
 const { timestamp, pause } = useTimestamp({ controls: true })
 const format = useDateFormat(timestamp, 'YYYY年MM月DD日 HH:mm:ss')
-const begin = '2024-05-31 16:33:00'
+const begin = '2024-06-17 16:53:00'
 const beginValue = useDateFormat(begin, 'YYYY年MM月DD日 HH:mm:ss')
 const beginTime = new Date(begin).getTime()
 const showMask = ref(true)

@@ -7,6 +7,9 @@ const baseConfig = {
     timeout: 60000,
     // 在请求前修改配置，如：注入 token 值
     async beforeFetch({ options }) {
+      options.headers = {
+        'Content-Type':'application/json;charset=UTF-8'
+      }
       return { options }
     },
     // 在请求后处理数据，如：拦截错误、处理过期
@@ -21,18 +24,18 @@ const baseConfig = {
     }
   },
   fetchOptions: {
-    mode: 'cors'
+    mode: 'cors',
   }
 }
 function baseFetch(opt) {
-  // console.log('baseFetch', opt, baseConfig)
+  console.log('baseFetch', opt, baseConfig)
   return createFetch({ baseConfig, ...(opt || {}) })
 }
 
 const baseURL = 'http://192.168.0.102:8000'
 
 const useMyFetch = baseFetch({
-  baseUrl: baseURL
+  baseUrl: baseURL,
 })
 function useGet(url, params) {
   const _url = computed(() => {

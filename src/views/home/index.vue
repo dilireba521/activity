@@ -22,7 +22,7 @@
           </div>
           <div v-else class="flex">
             <Panel icon="question" class="flex-1" :title="dataSource?.question?.title || '问题'">
-              <div class="flex items-center justify-center w-full h-full">Q：{{ dataSource?.question?.content }}</div>
+              <div class="flex items-center justify-center w-full h-full break-all p-16">Q：{{ dataSource?.question?.content }}</div>
             </Panel>
             <Panel icon="answer" class="flex-1" title="选项">
               <div v-if="dataSource?.question?.options" class="flex items-center h-full">
@@ -32,7 +32,7 @@
                       {{ item.title }}：{{ item.content }}
                     </div>
                   </div>
-                </div>
+            </div>
               </div>
             </Panel>
           </div>

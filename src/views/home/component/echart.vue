@@ -10,7 +10,9 @@
       <div class="mr-8 text-third">5分线</div>
       <div class="text-secondary">虾米股份</div>
     </div>
-    <div ref="curEchart" style="height: 794px"></div>
+    <div ref="curEchart" style="height: 794px">
+      <Empty v-if="!myChart" :style="{ marginBlock: '0px', paddingTop: '320px' }" :image="Empty.PRESENTED_IMAGE_SIMPLE" />
+    </div>
   </div>
 </template>
 <script setup>
@@ -18,6 +20,7 @@ import * as echarts from 'echarts'
 import Right from '@/assets/right.svg'
 import { ref, onMounted, nextTick, watch } from 'vue'
 import { useDateFormat } from '@vueuse/core'
+import { Empty } from 'ant-design-vue'
 
 const props = defineProps({
   dataSource: {

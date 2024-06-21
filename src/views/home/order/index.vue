@@ -18,6 +18,7 @@
               <div class="name">{{ item.user_id }}</div>
               <div class="price">{{ item.prediction }}</div>
             </div>
+            <Empty v-if="listLeft.length == 0" :style="{ marginBlock: '0px', paddingTop: '320px' }" :image="Empty.PRESENTED_IMAGE_SIMPLE" />
           </div>
         </div>
         <div class="order">
@@ -30,6 +31,7 @@
               <div class="name">{{ item.user_id }}</div>
               <div class="price">{{ item.prediction }}</div>
             </div>
+            <Empty v-if="listRight.length == 0" :style="{ marginBlock: '0px', paddingTop: '320px' }" :image="Empty.PRESENTED_IMAGE_SIMPLE" />
           </div>
         </div>
       </div>
@@ -39,6 +41,8 @@
 <script setup>
 import { computed } from 'vue';
 import scheduleElm from './component/schedule.vue'
+import { Empty } from 'ant-design-vue'
+
 const props = defineProps({
   dataSource: {
     type: Object,

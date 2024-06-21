@@ -1,12 +1,16 @@
 <template>
   <div class="container">
-    <div class="flex height">
+    <div class="flex" style="height: 200px">
       <div class="flex-1 mr-16 card">
         <div class="title">当前价格</div>
         <div class="flex">
           <Textarea v-model:value="curPrice" class="felx-1 curVal"></Textarea>
           <div class="ml-16 felx-1">
-            <Input v-model:value="curBuySellPrice" class="curVal-num" placeholder="输入买卖数量" />
+            <div class="flex curVal-num">
+              <Input v-model:value="curBuySellPrice" class="mr-16" placeholder="输入买卖数量" />
+              <Checkbox style="width: 130px;line-height: 48px;" class="shrink-0" v-model:checked="curSpecial">急速拉盘/砸盘
+              </Checkbox>
+            </div>
             <div class="flex">
               <div @click="submit({ type: 'buy' })" class="flex-1 button active">买入</div>
               <div @click="submit({ type: 'sell' })" class="flex-1 button">卖出</div>
@@ -91,7 +95,7 @@
             <div>操作</div>
           </div>
           <div v-for="(item, i) in items" :key="i" class="forecast-list_item">
-            <div class="forecast-list_number">{{ item.user_id }}</div>
+            <div class="forecast-list_number">{{ item.user_id.toString().padStart(2, '0') }}</div>
             <div class="flex-1">{{ item.prediction }}</div>
             <div class="cursor-pointer text-yellow" @click="openEditForecast(item)">
               编辑
@@ -115,7 +119,7 @@ import scheduleElm from '@/views/home/order/component/schedule.vue'
 import cardElm from './component/card.vue'
 import addIcon from '@/assets/add.svg'
 import PanelElm from './component/panel.vue'
-import { Button, Input, Textarea, Row, Col, message } from 'ant-design-vue'
+import { Button, Input, Textarea, Row, Col, message, Checkbox } from 'ant-design-vue'
 import editForecast from './component/editForecast.vue'
 import editInfo from './component/editInfo.vue'
 import editQuestion from './component/editQuestion.vue'
@@ -140,6 +144,7 @@ const editType = ref(moduleType.info)
 // 当前价格
 const curPrice = ref(0)
 const curBuySellPrice = ref()
+const curSpecial = ref()
 
 // 玩家预测
 const editForecastRef = ref()
@@ -180,7 +185,7 @@ function submit(params) {
   if (params.type === 'sell') {
     _val = -_val
   }
-  priceaddFn({ change: _val })
+  priceaddFn({ change: _val, type: curSpecial.value ? "special" : "trade" })
 }
 
 function handleClick(params: any) {

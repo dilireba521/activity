@@ -10,11 +10,14 @@
   </div>
 </template>
 <script setup>
-import { computed } from 'vue'
+import { computed ,useSlots } from 'vue'
 import Notice from '@/assets/notice.svg'
 import Info from '@/assets/info.svg'
 import Answer from '@/assets/answer.svg'
 import Question from '@/assets/question.svg'
+
+const slots = useSlots();
+
 const props = defineProps({
   title: {
     type: String,

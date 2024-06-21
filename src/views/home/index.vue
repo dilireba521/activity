@@ -14,15 +14,18 @@
         <div class="flex-1">
           <div v-if="!showQuestion" class="flex">
             <Panel icon="info" class="flex-1" :title="dataSource?.zx?.title || '资讯'">
-              <div class="p-16">{{ dataSource?.zx?.content }}</div>
+              <div v-if="dataSource?.zx?.content" class="p-16">{{ dataSource?.zx?.content }}</div>
+              <Empty v-else :style="{ marginBlock: '0px', paddingTop: '32px' }" :image="Empty.PRESENTED_IMAGE_SIMPLE" />
             </Panel>
             <Panel icon="notice" class="flex-1" :title="dataSource?.notice?.title || '公告'">
-              <div class="p-16">{{ dataSource?.notice?.content }}</div>
+              <div v-if="dataSource?.notice?.content" class="p-16">{{ dataSource?.notice?.content }}</div>
+              <Empty v-else :style="{ marginBlock: '0px', paddingTop: '32px' }" :image="Empty.PRESENTED_IMAGE_SIMPLE" />
             </Panel>
           </div>
           <div v-else class="flex">
             <Panel icon="question" class="flex-1" :title="dataSource?.question?.title || '问题'">
-              <div class="flex items-center justify-center w-full h-full break-all p-16">Q：{{ dataSource?.question?.content }}</div>
+              <div class="flex items-center justify-center w-full h-full break-all p-16">Q：{{
+                dataSource?.question?.content }}</div>
             </Panel>
             <Panel icon="answer" class="flex-1" title="选项">
               <div v-if="dataSource?.question?.options" class="flex items-center h-full">
@@ -32,12 +35,12 @@
                       {{ item.title }}：{{ item.content }}
                     </div>
                   </div>
-            </div>
+                </div>
               </div>
             </Panel>
           </div>
           <div>
-            <EchartElm :dataSource="dataSource?.kline"/>
+            <EchartElm :dataSource="dataSource?.kline" />
           </div>
         </div>
         <div class="shrink-0">
@@ -52,7 +55,7 @@
   </div>
 </template>
 <script setup>
-import { computed,  ref } from 'vue'
+import { computed, reactive, ref } from 'vue'
 import Panel from './component/Panel.vue'
 import Next from '@/assets/next.svg'
 import EchartElm from './component/echart.vue'
@@ -60,14 +63,28 @@ import listElm from './list/index.vue'
 import orderElm from './order/index.vue'
 import openElm from './component/open.vue'
 import { useWebSocket } from '@vueuse/core'
-
+import { Empty, Input } from 'ant-design-vue'
+const dataVal = reactive({
+  code2: '',
+})
+function keyup(params) {
+  console.log("params======",params);
+}
+function change(params) {
+  console.log("params======",params,codeElmRef.value);
+  if(params.code.length == 6){
+    setTimeout(()=>{
+      codeElmRef.value?.clearAll()
+      console.log();
+    },10000)
+  }
+}
+const codeElmRef = ref()
 // 信息集合
 const dataSource = ref()
-const { status, data, send, open, close } = useWebSocket('ws://192.168.0.102:8000/rank/', {
+const { status, data, send, open, close } = useWebSocket('http://192.168.0.72:8000/rank/', {
   onMessage: (ws, event) => {
-    // console.log("event==",event);
     dataSource.value = JSON.parse(event.data)
-
     console.log("dataSource.value---", dataSource.value);
   },
   onConnected: (ws) => {
@@ -82,10 +99,10 @@ const { status, data, send, open, close } = useWebSocket('ws://192.168.0.102:800
   // },
 })
 
+
 const showQuestion = computed(() => {
   return dataSource.value?.question?.content
 })
-
 
 const headerList = ['系统', '报价', '行情', '分析', '职能', '工具', '资讯', '帮助', '决策']
 const sideList = [
@@ -206,4 +223,5 @@ window.addEventListener('beforeunload', function () {
       }
     }
   }
-}</style>
+}
+</style>

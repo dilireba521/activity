@@ -1,7 +1,11 @@
 <script setup>
 import { RouterLink, RouterView } from 'vue-router'
-import { ConfigProvider } from 'ant-design-vue'
-const theme = {
+import { ConfigProvider, theme } from 'ant-design-vue'
+import zhCN from 'ant-design-vue/es/locale/zh_CN';
+const { darkAlgorithm } = theme;
+
+const curTheme = {
+  algorithm:[darkAlgorithm],
   token: {
     colorPrimary: '#EFC394FF',
     colorError: '#D87179FF',
@@ -22,7 +26,7 @@ const theme = {
 </script>
 
 <template>
-  <ConfigProvider :theme="theme">
+  <ConfigProvider :locale="zhCN" :theme="curTheme">
     <RouterView />
   </ConfigProvider>
 </template>

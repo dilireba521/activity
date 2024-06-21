@@ -2,12 +2,12 @@
   <div class="box">
     <div class="header">
       <div class="flex">
-        <div class="header-price">最终价格：336</div>
+        <div class="header-price">最终价格：{{data?.data?.price}}</div>
         <div class="header-msg">
-          <div class="header-msg_item">参与人数：**人</div>
-          <div class="header-msg_item">总交易次数：**次</div>
-          <div class="header-msg_item">买入次数：**次</div>
-          <div class="header-msg_item">卖出次数：**次</div>
+          <div class="header-msg_item">参与人数：{{data?.data?.stat?.person_count}}人</div>
+          <div class="header-msg_item">总交易次数：{{data?.data?.stat?.trade_counts}}次</div>
+          <div class="header-msg_item">买入次数：{{data?.data?.stat?.buy_count}}次</div>
+          <div class="header-msg_item">卖出次数：{{data?.data?.stat?.sell_count}}次</div>
         </div>
       </div>
       <div class="header-title">虾米股份 200216</div>
@@ -35,10 +35,10 @@
               v-for="(item, i) in items"
               :key="i"
             >
-              <div class="list-item_rank">{{ i + 1 }}</div>
-              <div class="list-item_number">{{ 22 }}</div>
-              <div class="list-item_price">{{ 222 }}</div>
-              <div class="list-item_diff">{{ 222 }}</div>
+              <div class="list-item_rank">{{ (i + 1 + index * 20).toString().padStart(2, '0')}}</div>
+              <div class="list-item_number">{{ item.user_id.toString().padStart(2, '0') }}</div>
+              <div class="list-item_price">{{ item.prediction  }}</div>
+              <div class="list-item_diff">{{ item.diff  }}</div>
             </div>
           </div>
         </Col>
@@ -49,9 +49,18 @@
 <script setup>
 import { Row, Col } from 'ant-design-vue'
 import { arrayChunks } from '@/utils/array.js'
-const arr = Array.from({ length: 120 }, (_, i) => i)
+import { useGet } from '@/utils/fetch.js'
+import { watch, ref } from 'vue';
+
 const size = 20
-const chunks = arrayChunks(arr, size)
+const chunks = ref()
+const { data } = useGet('/games/rank/')
+
+watch(data, (newVal) => {
+  console.log(newVal);
+  chunks.value = arrayChunks(newVal.data.rank, size)
+})
+
 </script>
 <style lang="less" scoped>
 .box {

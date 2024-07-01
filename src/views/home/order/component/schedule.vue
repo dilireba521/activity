@@ -1,7 +1,7 @@
 <template>
   <div class="schedule">
     <div class="schedule_time">当前游戏时间：{{ diffTime }}</div>
-    <div class="schedule_step">当前阶段：{{ dataSource?.stage?.stage || '- -' }}</div>
+    <div class="schedule_step">当前阶段：{{ dataSource?.stage?.stage || '第一阶段' }}</div>
     <div class="schedule_next">距离下一阶段</div>
     <div class="schedule_countdown">{{ residue }}</div>
   </div>

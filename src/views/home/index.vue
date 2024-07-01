@@ -40,18 +40,18 @@
             </Panel>
           </div>
           <div>
-            <EchartElm :dataSource="dataSource?.kline" />
+            <EchartElm :dataSource="kline" />
           </div>
         </div>
         <div class="shrink-0">
-          <listElm />
+          <listElm :dataSource="dataSource"/>
         </div>
         <div class="shrink-0">
           <orderElm :dataSource="dataSource"></orderElm>
         </div>
       </div>
     </div>
-    <openElm />
+    <openElm :dataSource="dataSource"/>
   </div>
 </template>
 <script setup>
@@ -82,9 +82,11 @@ function change(params) {
 const codeElmRef = ref()
 // 信息集合
 const dataSource = ref()
-const { status, data, send, open, close } = useWebSocket('http://192.168.0.72:8000/rank/', {
+const kline = ref()
+const { status, data, send, open, close } = useWebSocket('http://192.168.0.102:8000/rank/', {
   onMessage: (ws, event) => {
-    dataSource.value = JSON.parse(event.data)
+    dataSource.value = event?.data && JSON.parse(event.data)
+    kline.value = dataSource.value?.kline
     console.log("dataSource.value---", dataSource.value);
   },
   onConnected: (ws) => {

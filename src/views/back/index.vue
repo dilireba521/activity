@@ -21,11 +21,22 @@
       <div style="width: 300px" class="flex items-center justify-center mr-16 card active single">
         K线展示
       </div>
-      <div style="width: 260px" class="flex items-center justify-center mr-16 card single">
-        开盘
+      <div class="flex flex-col">
+        <Popconfirm title="是否进入下一阶段?" @confirm="changeStage">
+          <div style="width: 260px"
+            class="flex items-center justify-center mr-16 card single cursor-pointer">
+            下一阶段
+            <!-- stage -->
+          </div>
+        </Popconfirm>
+
+        <div style="width: 260px" class="mt-8 flex items-center justify-center mr-16 card single">
+          开盘
+        </div>
       </div>
+
       <div style="width: 320px" class="card">
-        <scheduleElm />
+        <scheduleElm  :dataSource="dataSource"/>
       </div>
     </div>
     <div class="pt-40">
@@ -119,7 +130,7 @@ import scheduleElm from '@/views/home/order/component/schedule.vue'
 import cardElm from './component/card.vue'
 import addIcon from '@/assets/add.svg'
 import PanelElm from './component/panel.vue'
-import { Button, Input, Textarea, Row, Col, message, Checkbox } from 'ant-design-vue'
+import { Button, Input, Textarea, Row, Col, message, Checkbox, Popconfirm } from 'ant-design-vue'
 import editForecast from './component/editForecast.vue'
 import editInfo from './component/editInfo.vue'
 import editQuestion from './component/editQuestion.vue'
@@ -138,6 +149,7 @@ const dataSource = reactive({
   info: [],
   notice: [],
   question: [],
+  stage:{}
 })
 
 const editType = ref(moduleType.info)
@@ -272,6 +284,14 @@ async function predictionFn() {
 async function klineFn() {
   const { data } = await useGet('/games/kline/')
   curPrice.value = data.value?.data
+}
+
+// 下个阶段
+async function changeStage() {
+  const { data } = await useMyFetch('/games/stage/').post().json()
+  console.log("data==", data);
+  dataSource.stage = data.value?.data
+
 }
 function initData() {
   noticeeditFn({ type: moduleType.info })

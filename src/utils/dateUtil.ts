@@ -8,6 +8,11 @@ dayjs.extend(duration)
 const DATE_TIME_FORMAT = 'YYYY年MM月DD日 HH:mm:ss'
 const DATE_FORMAT = 'YYYY-MM-DD'
 const TIME_FORMAT = 'HH:mm:ss'
+const TIME_FORMAT2 = 'HH:mm'
+
+export function formatToTime2(date?: dayjs.ConfigType, format = TIME_FORMAT2): string {
+  return dayjs(date).format(format)
+}
 
 export function formatToTime(date?: dayjs.ConfigType, format = TIME_FORMAT): string {
   return dayjs(date).format(format)

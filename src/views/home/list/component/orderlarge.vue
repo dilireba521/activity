@@ -1,15 +1,25 @@
 <template>
   <div class="box">
     <div class="title">大额买卖</div>
-    <div class="item" v-for="(item, i) in dataSource" :key="i">
-      <div class="item_time">{{ item.time }}</div>
-      <div class="item_price">{{ item.price }}</div>
-      <div class="item_type">大笔买入</div>
-      <div class="item_number">{{ item.number }}手</div>
-    </div>
+    <template v-if="dataSource?.length > 0">
+      <div :class="['item',
+        item.type == '极速拉升' && 'red',
+        item.type == '猛烈打压' && 'origin',
+        item.type == '大笔卖出' && 'green'
+      ]" v-for="(item, i) in dataSource" :key="i">
+        <div class="item_time">{{ item.time }}</div>
+        <div class="item_price">{{ item.price }}</div>
+        <div class="item_type">{{ item.type }}</div>
+        <div class="item_number">{{ item.number }}手</div>
+      </div>
+    </template>
+    <Empty v-else:style="{ marginBlock: '0px', paddingTop: '320px' }" :image="Empty.PRESENTED_IMAGE_SIMPLE" />
+
   </div>
 </template>
 <script setup>
+import { Empty } from 'ant-design-vue'
+
 const props = defineProps({
   dataSource: {
     type: Array,
@@ -25,6 +35,7 @@ const props = defineProps({
   height: 276px;
   padding: 0 4px;
 }
+
 .title {
   font-weight: 500;
   font-size: 14px;
@@ -33,18 +44,33 @@ const props = defineProps({
   height: 24px;
   text-align: center;
 }
+
 .item {
   display: flex;
   font-family: Roboto, Roboto;
   font-weight: 400;
   font-size: 14px;
-  color: #ff5260;
+  color: #FF5260FF;
   line-height: 20px;
+
+  &.green {
+    color: #20B26CFF;
+  }
+
+  &.red {
+    color: #EE0000FF;
+  }
+
+  &.origin {
+    color: #FF8000FF;
+  }
+
   &_price {
     width: 50px;
     text-align: right;
     margin-right: 20px;
   }
+
   &_number {
     flex: 1;
     text-align: right;

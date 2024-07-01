@@ -1,24 +1,27 @@
 <template>
   <div class="box">
-    <div class="order" v-for="(item, i) in dataSource" :key="i">
+    <template v-if="dataSource?.length > 0">
+      <div class="order" v-for="(item, i) in dataSource" :key="i">
       <div class="order_time">{{ item.time }}</div>
       <div class="order_price">{{ item.price }}</div>
-      <div :class="['order_value', item.value > target && 'active']">
+      <div :class="['order_value', item.type == '买入' && 'active']">
         {{ item.value
-        }}<img v-if="item.value != target" :src="item.value > target ? upIcon : downIcon" />
+        }}<img v-if="item.price != 0" :src="item.type == '买入' ? upIcon : downIcon" />
       </div>
-      <div class="order_number">{{ item.number }}</div>
+      <!-- <div class="order_number">{{ item.number }}</div> -->
     </div>
+    </template>
+    
+    <Empty v-else:style="{ marginBlock: '0px', paddingTop: '320px' }" :image="Empty.PRESENTED_IMAGE_SIMPLE" />
+
   </div>
 </template>
 <script setup>
 import upIcon from '@/assets/up.svg'
 import downIcon from '@/assets/down.svg'
+import { Empty } from 'ant-design-vue'
+
 const props = defineProps({
-  target: {
-    type: [String, Number],
-    default: 90
-  },
   dataSource: {
     type: Object,
     default: () => []
@@ -27,6 +30,7 @@ const props = defineProps({
 </script>
 <style lang="less" scoped>
 .box {
+  overflow: auto;
   height: 288px;
   background: #101014;
   font-family: Roboto, Roboto;
@@ -39,12 +43,13 @@ const props = defineProps({
   display: flex;
   padding: 0 8px 0 4px;
   &_price {
-    width: 68px;
+    width: 98px;
     text-align: right;
     color: #ff5260;
   }
   &_value {
-    width: 73px;
+    // width: 73px;
+    flex: 1;
     text-align: right;
     color: #20b26c;
     &.active {

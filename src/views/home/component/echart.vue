@@ -10,8 +10,8 @@
       <div class="mr-8 text-third">5分线</div>
       <div class="text-secondary">虾米股份</div>
     </div>
-    <div ref="curEchart" style="height: 794px">
-      <Empty v-if="!myChart" :style="{ marginBlock: '0px', paddingTop: '320px' }" :image="Empty.PRESENTED_IMAGE_SIMPLE" />
+    <div ref="curEchart" style="height: 794px;width: 100%;">
+      <!-- <Empty v-if="!myChart" :style="{ marginBlock: '0px', paddingTop: '320px' }" :image="Empty.PRESENTED_IMAGE_SIMPLE" /> -->
     </div>
   </div>
 </template>
@@ -24,8 +24,8 @@ import { Empty } from 'ant-design-vue'
 
 const props = defineProps({
   dataSource: {
-    type: Object,
-    default: () => { }
+    type: Array,
+    default: () => []
   }
 })
 
@@ -82,16 +82,20 @@ const list = [
 var myChart = null
 const cur = ref('5min')
 const curEchart = ref()
+
 function initData() {
-  if (!myChart)
-    myChart = echarts.init(curEchart.value)
+  if (!myChart) {
+  console.log("myChart===",echarts,curEchart.value);
+
+    myChart = echarts?.init(curEchart.value)
+  }
   const _datax = [], _data = [];
   props.dataSource?.forEach((item) => {
-    const _time = useDateFormat(item.create_time,'HH:mm')
+    const _time = useDateFormat(item.create_time, 'HH:mm')
     _datax.push(_time.value)
     _data.push([item.close, item.open, item.high, item.low])
   })
-  myChart.setOption({
+  myChart?.setOption({
     grid: {
       left: '2%',
       right: '4%',
@@ -171,13 +175,14 @@ function initData() {
       }
     ]
   })
+
 }
 watch(() => props.dataSource, () => {
   nextTick(() => {
     initData()
   })
 })
-onMounted(()=>{
+onMounted(() => {
   window.onresize = function () {
     myChart?.resize()
   }

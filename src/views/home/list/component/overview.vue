@@ -3,60 +3,67 @@
     <div class="flex-1 pl-4 pr-8">
       <div class="detail">
         <div>现价</div>
-        <div class="detail_value text-red">336</div>
+        <div class="detail_value text-red">{{info?.now || 0}}</div>
       </div>
       <div class="detail">
         <div>涨跌</div>
-        <div class="detail_value text-red">336</div>
+        <div class="detail_value text-red">{{parseFloat(info?.zd || 0).toFixed(0) || 0}}</div>
       </div>
       <div class="detail">
         <div>涨幅</div>
-        <div class="detail_value text-red">0.12%</div>
+        <div class="detail_value text-red">{{parseFloat(info?.zf || 0).toFixed(2) || 0}}%</div>
       </div>
       <div class="detail">
         <div>总量</div>
-        <div class="detail_value text-yellow">336</div>
+        <div class="detail_value text-yellow">{{info?.zl || 0}}</div>
       </div>
       <div class="detail">
         <div>总手</div>
-        <div class="detail_value text-yellow">336</div>
+        <div class="detail_value text-yellow">{{info?.zs || 0}}</div>
       </div>
-      <div class="detail">
+      <!-- <div class="detail">
         <div>总股本</div>
-        <div class="detail_value text-gray">336</div>
-      </div>
+        <div class="detail_value text-gray">{{info?.zd || 0}}</div>
+      </div> -->
     </div>
     <div class="flex-1 pl-4 pr-8">
       <div class="detail">
         <div>开盘</div>
-        <div class="detail_value text-green">336</div>
+        <div class="detail_value text-green">{{info?.open || 0}}</div>
       </div>
       <div class="detail">
         <div>最高</div>
-        <div class="detail_value text-red">336</div>
+        <div class="detail_value text-red">{{info?.max || 0}}</div>
       </div>
       <div class="detail">
         <div>最低</div>
-        <div class="detail_value text-green">0.12%</div>
+        <div class="detail_value text-green">{{info?.min || 0}}</div>
       </div>
       <div class="detail">
         <div>比量</div>
-        <div class="detail_value text-red">336</div>
+        <div class="detail_value text-red">{{info?.zd || 0}}</div>
       </div>
       <div class="detail">
         <div>换手</div>
-        <div class="detail_value text-gray">88.8%</div>
+        <div class="detail_value text-gray">{{parseFloat(info?.hs || 0).toFixed(2) || 0}}%</div>
       </div>
     </div>
   </div>
 </template>
 <script setup>
+import { ref, watch } from 'vue'
+
 const props = defineProps({
-  data: {
+  dataSource: {
     type: Object,
-    default: () => ({})
+    default: () => { }
   }
 })
+const info = ref()
+watch(()=> props.dataSource, (val) => {
+
+  info.value = val?.info
+},{deep: true})
 </script>
 <style lang="less" scoped>
 .box {
@@ -72,6 +79,7 @@ const props = defineProps({
 }
 .detail {
   display: flex;
+  word-break: keep-all;
   &_value {
     flex: 1;
     text-align: right;

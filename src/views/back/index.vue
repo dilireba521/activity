@@ -23,20 +23,20 @@
       </div>
       <div class="flex flex-col">
         <Popconfirm title="是否进入下一阶段?" @confirm="changeStage">
-          <div style="width: 260px"
-            class="flex items-center justify-center mr-16 card single cursor-pointer">
+          <div style="width: 260px" class="flex items-center justify-center mr-16 card single cursor-pointer">
             下一阶段
             <!-- stage -->
           </div>
         </Popconfirm>
-
-        <div style="width: 260px" class="mt-8 flex items-center justify-center mr-16 card single">
-          开盘
-        </div>
+        <Popconfirm title="是否开盘?" @confirm="changeStage">
+          <div style="width: 260px" class="mt-8 flex items-center justify-center mr-16 card single">
+            开盘
+          </div>
+        </Popconfirm>
       </div>
 
       <div style="width: 320px" class="card">
-        <scheduleElm  :dataSource="dataSource"/>
+        <scheduleElm :dataSource="dataSource" />
       </div>
     </div>
     <div class="pt-40">
@@ -149,7 +149,7 @@ const dataSource = reactive({
   info: [],
   notice: [],
   question: [],
-  stage:{}
+  stage: {}
 })
 
 const editType = ref(moduleType.info)
@@ -288,9 +288,14 @@ async function klineFn() {
 
 // 下个阶段
 async function changeStage() {
-  const { data } = await useMyFetch('/games/stage/').post().json()
-  console.log("data==", data);
-  dataSource.stage = data.value?.data
+  try {
+    const { data } = await useMyFetch('/games/stage/').post().json()
+    console.log("data==", data);
+    dataSource.stage = data.value?.data
+    message.success(data.value?.msg || '操作成功！')
+  } catch (error) {
+    message.error('操作失败！')
+  }
 
 }
 function initData() {

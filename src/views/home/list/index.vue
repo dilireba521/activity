@@ -5,7 +5,7 @@
       <div class="header-name">虾米股份 200216</div>
       <div class="header-msg">
         <div class="header-msg_value">{{ dataSource?.info?.now || 0 }}</div>
-        <div class="header-msg_number">{{ dataSource?.info?.zd || 0 }}</div>
+        <div class="header-msg_number">{{ dataSource?.info?.zd || 0 }}</div>&nbsp;&nbsp;
         <div class="header-msg_per">{{ dataSource?.info?.zf.toFixed(2) || 0 }}%</div>
       </div>
     </div>
@@ -52,15 +52,24 @@ const orderlargeData = ref()
 
 function reloadData() {
   const _arr = []
+  const _arr1 = []
   for (let i = 1; i < 6; i++) {
     _arr.push({
-      name: '卖' + i,
-      price: parseInt(Math.random() * 100),
-      number: parseInt(Math.random() * 10)
+      name: '买' + i,   
+      price: (props?.dataSource?.info?.now || 0) + (i-1) * 10,
+      number: parseInt(Math.random() * 100 + 1)
     })
   }
-  rankData.sell = _arr
-  rankData.buy = _arr
+  for (let i = 1; i < 6; i++) {
+    _arr1.push({
+      name: '卖' + i,
+      price: (props?.dataSource?.info?.now || 0) - (i+1-2) * 10,
+      number: parseInt(Math.random() * 100 + 1)
+    })
+  }
+  rankData.sell = _arr.reverse()
+  rankData.buy = _arr1
+  console.log(_arr, _arr1)
 
 }
 useIntervalCustom(reloadData, { delay: 5000 })

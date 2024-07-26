@@ -1,8 +1,8 @@
 <template>
   <div :class="['box', props.type == 'buy' && 'active']">
     <div class="rank" v-for="(item, i) in props.dataSource" :key="i">
-      <div class="rank_name">{{ item.name }}</div>
-      <div class="rank_price text-green">{{ item.price }}</div>
+      <div class="ran'k_name">{{ item.name }}</div>
+      <div :class="['rank_price',type == 'buy'? 'text-green':'text-red']">{{ item.price }}</div>
       <div class="rank_number text-green-1">{{ item.number }}</div>
     </div>
   </div>
@@ -41,11 +41,11 @@ const props = defineProps({
     width: 50px;
   }
   &_price {
-    width: 70px;
+    width: 100px;
     text-align: right;
   }
   &_number {
-    width: 60px;
+    width: 100px;
     text-align: right;
   }
 }

@@ -21,7 +21,7 @@ const begin = new Date().getTime()
 
 const residue = computed(() => {
   const _now = new Date().getTime()
-  const _residue = props?.dataSource?.stage?.residue
+  const _residue = props?.dataSource?.stage?.residue * 1000
   return diffTime2(_now + _residue, _now) || "00:00:00"
 })
 const { timestamp } = useTimestamp({ controls: true, interval: 1000 })

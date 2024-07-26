@@ -3,7 +3,7 @@
     <template v-if="dataSource?.length > 0">
       <div class="order" v-for="(item, i) in dataSource" :key="i">
       <div class="order_time">{{ item.time }}</div>
-      <div class="order_price">{{ item.price }}</div>
+      <div :class="['order_price', item.type == '买入' && 'active']">{{ item.price }}</div>
       <div :class="['order_value', item.type == '买入' && 'active']">
         {{ item.value
         }}<img v-if="item.price != 0" :src="item.type == '买入' ? upIcon : downIcon" />
@@ -45,7 +45,10 @@ const props = defineProps({
   &_price {
     width: 98px;
     text-align: right;
-    color: #ff5260;
+    color: #20b26c;
+    &.active {
+      color: #ff5260;
+    }
   }
   &_value {
     // width: 73px;

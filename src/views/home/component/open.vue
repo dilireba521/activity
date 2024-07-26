@@ -20,7 +20,7 @@ import Logo from '@/assets/logo.svg'
 
 const { timestamp, pause } = useTimestamp({ controls: true })
 const format = useDateFormat(timestamp, 'YYYY年MM月DD日 HH:mm:ss')
-const begin = '2024-09-22 17:00:00'
+const begin = '2024-07-26 10:00:00'
 const beginValue = useDateFormat(begin, 'YYYY年MM月DD日 HH:mm:ss')
 const beginTime = new Date(begin).getTime()
 const showMask = ref(true)
@@ -36,7 +36,7 @@ const props = defineProps({
 })
 
 watch(format, () => {
-  if (timestamp.value >= beginTime - 1 && props?.dataSource?.stage?.stage !== '准备阶段') {
+  if (timestamp.value >= beginTime - 1 && props?.dataSource?.stage?.stage !== '等待阶段') {
     showMask.value = false
     pause()
   }

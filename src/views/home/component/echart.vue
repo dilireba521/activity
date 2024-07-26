@@ -171,7 +171,14 @@ function initData() {
         itemStyle: {
           // borderWidth: 6
         },
-        data: _data
+        data: _data,
+        itemStyle:{
+          color:'#47b262',
+          color0:'#eb5454',
+          borderColor:'#47b262',
+          borderColor0:'#eb5454',
+          borderColorDoji:'#eb5454',
+        }
       }
     ]
   })

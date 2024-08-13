@@ -32,7 +32,8 @@ function baseFetch(opt) {
   return createFetch({ baseConfig, ...(opt || {}) })
 }
 
-const baseURL = 'http://192.168.0.102:8000'
+const env = import.meta.env
+const baseURL = env.VITE_GLOB_WEBSOCKET
 
 const useMyFetch = baseFetch({
   baseUrl: baseURL,

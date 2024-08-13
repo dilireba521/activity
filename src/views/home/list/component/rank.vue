@@ -1,6 +1,6 @@
 <template>
-  <div :class="['box', props.type == 'buy' && 'active']">
-    <div class="rank" v-for="(item, i) in props.dataSource" :key="i">
+  <div :class="['box', type == 'buy' && 'active']">
+    <div class="rank" v-for="(item, i) in dataSource" :key="i">
       <div class="ran'k_name">{{ item.name }}</div>
       <div :class="['rank_price',type == 'buy'? 'text-green':'text-red']">{{ item.price }}</div>
       <div class="rank_number text-green-1">{{ item.number }}</div>

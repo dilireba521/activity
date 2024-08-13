@@ -32,7 +32,7 @@ function baseFetch(opt) {
   return createFetch({ baseConfig, ...(opt || {}) })
 }
 
-const baseURL = 'http://192.168.1.14:8000'
+const baseURL = 'http://192.168.0.102:8000'
 
 const useMyFetch = baseFetch({
   baseUrl: baseURL,

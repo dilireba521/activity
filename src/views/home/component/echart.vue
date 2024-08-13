@@ -85,7 +85,7 @@ const curEchart = ref()
 
 function initData() {
   if (!myChart) {
-  console.log("myChart===",echarts,curEchart.value);
+    console.log("myChart===", echarts, curEchart.value,props.dataSource);
 
     myChart = echarts?.init(curEchart.value)
   }
@@ -96,6 +96,12 @@ function initData() {
     _data.push([item.close, item.open, item.high, item.low])
   })
   myChart?.setOption({
+    dataZoom: [{
+      type: 'inside',
+      start: 90,
+      minValueSpan: 32,
+      maxValueSpan: 32
+    }],
     grid: {
       left: '2%',
       right: '4%',
@@ -113,9 +119,9 @@ function initData() {
         },
         axisLabel: {
           showMaxLabel: true,
-          // textStyle: {
-          //   color: '#FFFFFF99'
-          // },
+          textStyle: {
+            color: '#FFFFFF99'
+          },
           margin: 20
         },
         axisLine: {
@@ -130,13 +136,14 @@ function initData() {
         splitLine: {
           show: false // 显示刻度线
         },
-        min: function (extent) {
-          const _max = Math.max(extent.max + Math.floor(extent.max / 2), 4)
-          return _max == 4 ? 0 : -1
-        },
+        // min: function (extent) {
+        //   const _max = Math.max(extent.max + Math.floor(extent.max / 2), 4)
+        //   return _max == 4 ? 0 : -1
+        // },
         max: function (extent) {
-          const _max = Math.max(extent.max + Math.floor(extent.max / 2), 4)
-          return _max
+          // const _max = Math.max(extent.max + Math.floor(extent.max / 2), 4)
+          const _max =  extent.max + 8
+          return extent.max + 8
         }
       }
     ],
@@ -145,9 +152,9 @@ function initData() {
         type: 'value',
         position: 'right',
         axisLabel: {
-          // textStyle: {
-          //   color: '#FFFFFF99'
-          // },
+          textStyle: {
+            color: '#FFFFFF99'
+          },
           margin: 10
         },
         axisLine: {
@@ -172,12 +179,12 @@ function initData() {
           // borderWidth: 6
         },
         data: _data,
-        itemStyle:{
-          color:'#47b262',
-          color0:'#eb5454',
-          borderColor:'#47b262',
-          borderColor0:'#eb5454',
-          borderColorDoji:'#eb5454',
+        itemStyle: {
+          color: '#47b262',
+          color0: '#eb5454',
+          borderColor: '#47b262',
+          borderColor0: '#eb5454',
+          borderColorDoji: '#eb5454',
         }
       }
     ]

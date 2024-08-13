@@ -69,7 +69,7 @@ function reloadData() {
   }
   rankData.sell = _arr.reverse()
   rankData.buy = _arr1
-  console.log(_arr, _arr1)
+  // console.log(_arr, _arr1)
 
 }
 useIntervalCustom(reloadData, { delay: 5000 })

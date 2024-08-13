@@ -1,8 +1,8 @@
 <template>
   <div class="schedule">
-    <div class="schedule_time">当前游戏时间：{{ diffTime }}</div>
-    <div class="schedule_step">当前阶段：{{ dataSource?.stage?.stage || '第一阶段' }}</div>
-    <div class="schedule_next">距离下一阶段</div>
+    <div class="schedule_time">当前时间：{{ diffTime }}</div>
+    <div class="schedule_step">当前阶段：{{ dataSource?.stage?.stage || timeList[stage].stage }}</div>
+    <div class="schedule_next">距离{{timeList[stage].stage}}阶段</div>
     <div class="schedule_countdown">{{ residue }}</div>
   </div>
 </template>
@@ -10,23 +10,41 @@
 import { computed, ref, watch } from 'vue'
 import { useTimestamp, useDateFormat } from '@vueuse/core'
 import { diffTime2 } from '@/utils/dateUtil'
-
+import { formatToTime, formatToDate } from '@/utils/dateUtil';
+import dayjs from 'dayjs'
 const props = defineProps({
   dataSource: {
     type: Object,
     default: () => { }
   }
 })
-const begin = new Date().getTime()
-
-const residue = computed(() => {
-  const _now = new Date().getTime()
-  const _residue = props?.dataSource?.stage?.residue * 1000
-  return diffTime2(_now + _residue, _now) || "00:00:00"
-})
+// const begin = new Date().getTime()
+const timeList = [
+  {
+    time:'19:00:00',
+    stage:'早盘'
+  },{
+    time:'20:00:00',
+    stage:'晚盘'
+  }
+]
 const { timestamp } = useTimestamp({ controls: true, interval: 1000 })
+
+const stage = computed(() => {
+  const _day = formatToDate(new Date())
+  const _now = new Date().getTime()
+  const _target = dayjs(_day + timeList[0].time)
+  return _now < _target ? 0 : 1
+})
+const residue = computed(() => {
+  // const _residue = props?.dataSource?.stage?.residue * 1000
+  const _day = formatToDate(timestamp.value)
+  const _target = dayjs(_day + timeList[stage.value || 0]?.time)
+  return diffTime2(_target, timestamp.value) || "00:00:00"
+})
 const diffTime = computed(() => {
-  return diffTime2(timestamp.value, begin)
+  // return diffTime2(timestamp.value, begin)
+  return formatToTime(timestamp.value)
 })
 </script>
 <style lang="less" scoped>

@@ -109,3 +109,9 @@
 .cursor-pointer {
   cursor: pointer;
 }
+.inline-block {
+  display: inline-block;
+}
+.m-auto {
+  margin: auto;
+}

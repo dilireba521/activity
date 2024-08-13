@@ -83,7 +83,8 @@ const codeElmRef = ref()
 // 信息集合
 const dataSource = ref()
 const kline = ref()
-const { status, data, send, open, close } = useWebSocket('http://192.168.1.14:8000/rank/', {
+
+const { status, data, send, open, close } = useWebSocket('http://192.168.0.102:8000/rank/', {
   onMessage: (ws, event) => {
     dataSource.value = event?.data && JSON.parse(event.data)
     kline.value = dataSource.value?.kline

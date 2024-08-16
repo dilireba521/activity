@@ -10,7 +10,7 @@
           <div class="side-item-name">{{ item.name }}</div>
         </div>
       </div>
-      <div class="flex flex-1">
+      <div class="layout flex flex-1">
         <div class="flex-1">
           <div v-if="!showQuestion" class="flex">
             <Panel icon="info" class="flex-1" :title="dataSource?.zx?.title || '资讯'">
@@ -43,15 +43,13 @@
             <EchartElm :dataSource="kline" />
           </div>
         </div>
-        <div class="shrink-0">
-          <listElm :dataSource="dataSource"/>
-        </div>
-        <div class="shrink-0">
-          <orderElm :dataSource="dataSource"></orderElm>
-        </div>
+        <!-- <div class="shrink-0"> -->
+        <listElm style="width: 13%;" class="shrink-0" :dataSource="dataSource" />
+        <!-- </div> -->
+        <orderElm style="width: 19%;" class="shrink-0" :dataSource="dataSource"></orderElm>
       </div>
     </div>
-    <openElm :dataSource="dataSource"/>
+    <openElm :dataSource="dataSource" />
   </div>
 </template>
 <script setup>
@@ -64,29 +62,32 @@ import orderElm from './order/index.vue'
 import openElm from './component/open.vue'
 import { useWebSocket } from '@vueuse/core'
 import { Empty, Input } from 'ant-design-vue'
+// import { useDataSourceStore} from '@/stores/dataSource'
 const dataVal = reactive({
   code2: '',
 })
 function keyup(params) {
-  console.log("params======",params);
+  console.log("params======", params);
 }
 function change(params) {
-  console.log("params======",params,codeElmRef.value);
-  if(params.code.length == 6){
-    setTimeout(()=>{
+  console.log("params======", params, codeElmRef.value);
+  if (params.code.length == 6) {
+    setTimeout(() => {
       codeElmRef.value?.clearAll()
       console.log();
-    },10000)
+    }, 10000)
   }
 }
 const codeElmRef = ref()
 // 信息集合
+// const dataSourceStore = useDataSourceStore()
 const dataSource = ref()
 const kline = ref()
 const env = import.meta.env
 const { status, data, send, open, close } = useWebSocket(env.VITE_GLOB_WEBSOCKET + '/rank/', {
   onMessage: (ws, event) => {
     dataSource.value = event?.data && JSON.parse(event.data)
+    // dataSourceStore.dataSource = event?.data && JSON.parse(event.data)
     kline.value = dataSource.value?.kline
     // console.log("dataSource.value---", dataSource.value);
   },
@@ -155,7 +156,7 @@ window.addEventListener('beforeunload', function () {
 </script>
 <style lang="less" scoped>
 .container {
-  height: calc(100vh - 32px);
+  height: calc(100vh - 45px);
   position: relative;
 }
 
@@ -195,6 +196,12 @@ window.addEventListener('beforeunload', function () {
   &-item+&-item {
     border-top: 0;
   }
+}
+
+.layout {
+  // background: #101014;
+  border-bottom: 1px solid #473a2c;
+  overflow: hidden;
 }
 
 .answer {

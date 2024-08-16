@@ -41,9 +41,10 @@ const props = defineProps({
 }
 .order {
   display: flex;
-  padding: 0 8px 0 4px;
+  padding: 0 3.2% 0 1.6%;
   &_price {
-    width: 98px;
+    width: 40%;
+    min-width: 98px;
     text-align: right;
     color: #20b26c;
     &.active {

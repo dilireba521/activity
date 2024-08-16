@@ -1,6 +1,6 @@
 <template>
   <div class="box">
-    <div class="flex-1 pl-4 pr-8">
+    <div style="padding-left: 1.6%;padding-right: 3.2%;" class="flex-1">
       <div class="detail">
         <div>现价</div>
         <div class="detail_value text-red">{{info?.now || 0}}</div>
@@ -26,7 +26,7 @@
         <div class="detail_value text-gray">{{info?.zd || 0}}</div>
       </div> -->
     </div>
-    <div class="flex-1 pl-4 pr-8">
+    <div style="padding-left: 1.6%;padding-right: 3.2%;" class="flex-1">
       <div class="detail">
         <div>开盘</div>
         <div class="detail_value text-green">{{info?.open || 0}}</div>
@@ -39,10 +39,10 @@
         <div>最低</div>
         <div class="detail_value text-green">{{info?.min || 0}}</div>
       </div>
-      <div class="detail">
+      <!-- <div class="detail">
         <div>比量</div>
         <div class="detail_value text-red">{{info?.zd || 0}}</div>
-      </div>
+      </div> -->
       <div class="detail">
         <div>换手</div>
         <div class="detail_value text-gray">{{parseFloat(info?.hs || 0).toFixed(2) || 0}}%</div>
@@ -67,7 +67,7 @@ watch(()=> props.dataSource, (val) => {
 </script>
 <style lang="less" scoped>
 .box {
-  height: 145px;
+  height: 124px;
   display: flex;
   background: rgba(216, 216, 216, 0.1);
   font-weight: 400;

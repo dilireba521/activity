@@ -100,7 +100,7 @@ function initData() {
       type: 'inside',
       start: 90,
       minValueSpan: 32,
-      maxValueSpan: 32
+      maxValueSpan: 40
     }],
     grid: {
       left: '2%',
@@ -151,6 +151,8 @@ function initData() {
       {
         type: 'value',
         position: 'right',
+        scale: true,
+        minInterval: 10,
         axisLabel: {
           textStyle: {
             color: '#FFFFFF99'
@@ -207,7 +209,7 @@ onMounted(() => {
   background: #101014;
   border-left: 1px solid #473a2c;
   border-right: 1px solid #473a2c;
-  border-bottom: 1px solid #473a2c;
+  // border-bottom: 1px solid #473a2c;
 }
 
 .scale {

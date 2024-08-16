@@ -37,7 +37,7 @@ const props = defineProps({
     default: () => { }
   }
 })
-
+let isRandom = false
 const rankData = reactive({
   sell: [
   ],
@@ -53,20 +53,34 @@ const orderlargeData = ref()
 function reloadData() {
   const _arr = []
   const _arr1 = []
+  
   for (let i = 1; i < 6; i++) {
+    let _number = parseInt(Math.random() * 50 + 1)
+    let _price = (props?.dataSource?.info?.now || 0) + (i - 1)
+    if (!isRandom) {
+      _number = i == 1 ? props?.dataSource?.pan?.sell : '--'
+      _price = i == 1 ? (props?.dataSource?.info?.now || 0) + (i - 1) : '--'
+    }
     _arr.push({
-      name: '买' + i,   
-      price: (props?.dataSource?.info?.now || 0) + (i-1) * 10,
-      number: parseInt(Math.random() * 100 + 1)
+      name: '卖' + i,
+      price: _price,
+      number: _number
     })
   }
   for (let i = 1; i < 6; i++) {
+    let _number = parseInt(Math.random() * 50 + 1)
+    let _price = (props?.dataSource?.info?.now || 0) - (i)
+    if (!isRandom) {
+      _number = i == 1 ? props?.dataSource?.pan?.buy : '--'
+      _price = i == 1 ? (props?.dataSource?.info?.now || 0) - (i) : '--'
+    }
     _arr1.push({
-      name: '卖' + i,
-      price: (props?.dataSource?.info?.now || 0) - (i+1-2) * 10,
-      number: parseInt(Math.random() * 100 + 1)
+      name: '买' + i,
+      price: _price < 0 ? 0 : _price,
+      number: _number
     })
   }
+
   rankData.sell = _arr.reverse()
   rankData.buy = _arr1
   // console.log(_arr, _arr1)
@@ -85,30 +99,35 @@ watch(() => props.dataSource, (cur) => {
       }
     }).slice(0, 12)
   }
-  if(cur?.other_info){
+  if (cur?.other_info) {
     orderlargeData.value = cur.other_info.map(item => {
       return {
         time: formatToTime2(item.create_time),
         price: item?.amount || 0,
-        number:  item?.price_change || 0,
+        number: item?.price_change || 0,
         type: item.type
       }
-    }).slice(0, 12) 
+    }).slice(0, 12)
+  }
+  if (cur?.pan?.sell) {
+    isRandom = false
+  } else {
+    isRandom = true
   }
 })
 
 </script>
 <style lang="less" scoped>
 .box {
-  width: 250px;
+  min-width: 250px;
 
-  background: #101014;
+  // background: #101014;
 
   .header {
-    padding: 20px 32px 4px 32px;
+    padding: 10px 32px 4px 32px;
     border-top: 1px solid #473a2c;
     border-bottom: 1px solid #473a2c;
-
+    text-align: center;
     &-name {
       font-weight: 500;
       font-size: 24px;
@@ -120,14 +139,15 @@ watch(() => props.dataSource, (cur) => {
       display: flex;
       font-family: Roboto, Roboto;
       align-items: self-end;
+      justify-content: center;
       color: #ff5260;
       font-size: 16px;
       line-height: 22px;
 
       &_value {
         min-width: 50px;
-        font-size: 24px;
-        line-height: 32px;
+        font-size: 40px;
+        line-height: 40px;
       }
 
       &_number {

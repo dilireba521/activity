@@ -4,10 +4,11 @@
       <div class="flex-1 mr-16 card">
         <div class="title">当前价格</div>
         <div class="flex">
-          <Textarea v-model:value="curPrice" class="felx-1 curVal"></Textarea>
+          <Textarea readonly v-model:value="curPrice" class="felx-1 curVal"></Textarea>
           <div class="ml-16 felx-1">
             <div class="flex curVal-num">
-              <Input v-model:value="curBuySellPrice" class="mr-16" placeholder="输入买卖数量" />
+              <InputNumber v-model:value="curBuySellPrice" :max="50" class="mr-16 flex-1 leading-48"
+                placeholder="输入买卖数量" />
               <Checkbox style="width: 130px;line-height: 48px;" class="shrink-0" v-model:checked="curSpecial">急速拉盘/砸盘
               </Checkbox>
             </div>
@@ -18,19 +19,51 @@
           </div>
         </div>
       </div>
-      <div style="width: 300px" class="flex items-center justify-center mr-16 card active single">
-        K线展示
+      <div style="width: 336px" class="card  mr-16 ">
+        <div class="text-20">集合竞价</div>
+        <div class="flex pt-12 pb-12">
+          <div class="mr-16">
+            <div class="text-red pb-8" style="width: 100px">多</div>
+            <Input size="large" placeholder="多头数量" v-model:value="buySellInfo.buyCount" />
+          </div>
+          <div>
+            <div class="text-green pb-8" style="width: 100px">空</div>
+            <Input size="large" placeholder="空头数量" v-model:value="buySellInfo.sellCount" />
+          </div>
+        </div>
+        <Button class=" w-full" size="large" @click="buySellPan" type="primary">
+          <div class="text-black">保存</div>
+        </Button>
       </div>
       <div class="flex flex-col">
-        <Popconfirm title="是否进入下一阶段?" @confirm="changeStage">
-          <div style="width: 260px" class="flex items-center justify-center mr-16 card single cursor-pointer">
-            下一阶段
-            <!-- stage -->
-          </div>
-        </Popconfirm>
-        <Popconfirm title="是否开盘?" @confirm="changeStage">
-          <div style="width: 260px" class="mt-8 flex items-center justify-center mr-16 card single">
-            开盘
+        <div style="width: 300px" class="flex items-center justify-center mr-16 card active single">
+          K线展示
+        </div>
+        <div @click="changeMask" v-if="!dataSource.pan" style="width: 300px"
+          class="flex items-center justify-center mr-16 mt-8 card single  cursor-pointer">
+          {{ dataSource.mask ? "关闭" : "打开" }}遮罩
+        </div>
+      </div>
+
+      <div class="flex flex-col">
+        <div style="width: 260px" class="flex items-center justify-center mr-16 card single cursor-pointer">
+          <Dropdown>
+            <div>
+              {{ curStage }}
+              <DownOutlined />
+            </div>
+            <template #overlay>
+              <Menu>
+                <Menu.Item v-for="item in stageList" :key="item.id" @click="changeStage(item.id)">
+                  {{ item.stage }}
+                </Menu.Item>
+              </Menu>
+            </template>
+          </Dropdown>
+        </div>
+        <Popconfirm placement="bottom" :title="['是否' + (dataSource.pan ? '闭' : '开') + '盘?']" @confirm="changePan">
+          <div class="mt-8 flex items-center justify-center mr-16 card single  cursor-pointer">
+            {{ dataSource.pan ? "开盘" : "闭盘" }}
           </div>
         </Popconfirm>
       </div>
@@ -38,31 +71,15 @@
       <div style="width: 320px" class="card">
         <scheduleElm :dataSource="dataSource" />
       </div>
-    </div>
-    <div class="pt-40">
-      <div class="title">资讯</div>
-      <Row :gutter="[16, 16]">
-        <Col class="height" v-for="item in dataSource.info" :key="item.id" :span="6">
-        <div :class="['card', item.isSend == 1 && 'active']">
-          <cardElm :title="item.title" :detail="item.content"
-            @click="(data) => handleClick({ ...data, type: moduleType.info, record: item })"></cardElm>
-        </div>
-        </Col>
-        <Col class="height" :span="6">
-        <div class="card">
-          <div class=" flex items-center justify-center w-full h-full cursor-pointer">
-            <img :src="addIcon" @click="openEditInfo({ type: moduleType.info })" />
-          </div>
-        </div>
-        </Col>
-      </Row>
+
+
     </div>
     <div class="pt-40">
       <div class="title">公告区（活动当前指引）</div>
       <Row :gutter="[16, 16]">
         <Col class="height" v-for="item in dataSource.notice" :key="item.id" :span="6">
         <div :class="['card', item.isSend == 1 && 'active']">
-          <cardElm :title="item.title" :detail="item.content"
+          <cardElm :title="item.title" :detail="item.content" :record="item"
             @click="(data) => handleClick({ ...data, type: moduleType.notice, record: item })"></cardElm>
         </div>
         </Col>
@@ -76,8 +93,61 @@
       </Row>
     </div>
     <div class="pt-40">
+      <PanelElm title="资讯">
+        <Row :gutter="[16, 16]">
+          <Col v-for="items in splitArrayIntoChunks(dataSource.info, dataSource.length)" :span="6">
+          <div class="card dark noPadding">
+            <div class="question" v-for="item in items" :key="item.id">
+              <div class="flex">
+                <TextTranslate :options="statusOptions" :value="item.isSend" type="dot"></TextTranslate>
+                <div>{{ item.title }}</div>
+              </div>
+              <Button style="width: 72px;height: 28px;" @click="handleClick({
+                action: item.isSend == 1 ? 'cancel' : 'submit', type: moduleType.info, record: item
+              })" size="small" type="primary">
+                <div class="text-black">{{ item.isSend == 1 ? '取消发布' : '发布' }}</div>
+              </Button>
+            </div>
+          </div>
+          </Col>
+          <!-- <Col class="height" v-for="item in dataSource.info" :key="item.id" :span="6">
+        <div :class="['card', item.isSend == 1 && 'active']">
+          <cardElm :title="item.title" :detail="item.content"
+            @click="(data) => handleClick({ ...data, type: moduleType.info, record: item })"></cardElm>
+        </div>
+        </Col>
+        <Col class="height" :span="6">
+        <div class="card">
+          <div class=" flex items-center justify-center w-full h-full cursor-pointer">
+            <img :src="addIcon" @click="openEditInfo({ type: moduleType.info })" />
+          </div>
+        </div>
+        </Col> -->
+        </Row>
+      </PanelElm>
+
+    </div>
+
+    <div class="pt-40">
       <PanelElm title="内幕交易阶段">
         <Row :gutter="[8, 8]">
+          <Col :span="6">
+          <PanelElm type="is-light" title="题库一">
+            <div class="question" v-for="item in dataSource.question" :key="item.id">
+              <div class="flex">
+                <TextTranslate :options="statusOptions" :value="item.isSend" type="dot"></TextTranslate>
+                <div>{{ item.title }}</div>
+              </div>
+              <Button style="width: 72px;height: 28px;" @click="handleClick({
+                action: item.isSend == 1 ? 'cancel' : 'submit', type: moduleType.question, record: item
+              })" size="small" type="primary">
+                <div class="text-black">{{ item.isSend == 1 ? '取消发布' : '发布' }}</div>
+              </Button>
+            </div>
+          </PanelElm>
+          </Col>
+        </Row>
+        <!-- <Row :gutter="[8, 8]">
           <Col class="height" v-for="item in dataSource.question" :key="item.id" :span="6">
           <div :class="['card dark', item.isSend == 1 && 'active']">
             <cardElm :hasCancel="item.isSend == 1" :title="item.title"
@@ -92,7 +162,7 @@
             </div>
           </div>
           </Col>
-        </Row>
+        </Row> -->
       </PanelElm>
     </div>
     <div class="pt-40">
@@ -125,17 +195,22 @@
   </div>
 </template>
 <script setup lang="ts">
-import { ref, computed, onMounted, reactive, watch } from 'vue'
+import { ref, computed, onMounted, reactive, watch, toRaw } from 'vue'
 import scheduleElm from '@/views/home/order/component/schedule.vue'
 import cardElm from './component/card.vue'
 import addIcon from '@/assets/add.svg'
 import PanelElm from './component/panel.vue'
-import { Button, Input, Textarea, Row, Col, message, Checkbox, Popconfirm } from 'ant-design-vue'
+import { Button, Tooltip, Input, InputNumber, Textarea, Row, Col, message, Checkbox, Popconfirm, Dropdown, Menu } from 'ant-design-vue'
+import { DownOutlined } from '@ant-design/icons-vue'
 import editForecast from './component/editForecast.vue'
 import editInfo from './component/editInfo.vue'
 import editQuestion from './component/editQuestion.vue'
 import { arrayChunks } from '@/utils/array.js'
 import { useGet, useMyFetch } from '@/utils/fetch.js'
+// import { CloudUploadOutlined, RedoOutlined } from "@ant-design/icons-vue"
+import { TextTranslate } from '@/components/OptionTranslate';
+import { statusOptions } from "@/utils/basicOptions"
+// import { useDataSourceStore} from '@/stores/dataSource'
 
 const arr = ref()
 const size = 20
@@ -145,13 +220,26 @@ enum moduleType {
   notice = '公告',
   question = '问题',
 }
+// const dataSourceStore = useDataSourceStore()
+
 const dataSource = reactive({
   info: [],
   notice: [],
   question: [],
-  stage: {}
+  stage: {},
+  pan: false,
+  mask: false,
+  length: 10,
 })
-
+// watch(()=>dataSourceStore.dataSource,(cur)=>{
+//   console.log('cur--', cur);
+//   dataSource.stage = cur?.stage
+// },{deep: true})
+// 修改买卖手数
+const buySellInfo = reactive({
+  buyCount: null,
+  sellCount: null,
+})
 const editType = ref(moduleType.info)
 // 当前价格
 const curPrice = ref(0)
@@ -285,18 +373,80 @@ async function klineFn() {
   const { data } = await useGet('/games/kline/')
   curPrice.value = data.value?.data
 }
+const stageList = ref()
+const curStage = ref()
+// 获取阶段列表
+async function getStageList() {
+  const { data } = await useGet('/games/stage/')
+  stageList.value = data.value?.data
+  curStage.value = stageList.value.find(item => item.isDisplay)?.stage
+}
 
-// 下个阶段
-async function changeStage() {
-  try {
-    const { data } = await useMyFetch('/games/stage/').post().json()
-    console.log("data==", data);
-    dataSource.stage = data.value?.data
+// 修改阶段
+async function changeStage(params: any) {
+  const { data } = await useMyFetch('/games/stage/').post({ id: params }).json()
+  if (data.value?.code == 0) {
+    curStage.value = data.value?.data?.stage
     message.success(data.value?.msg || '操作成功！')
+  } else {
+    message.error(data.value?.msg || '操作失败！')
+  }
+}
+
+// 获取开闭盘信息
+async function getPanInfo() {
+  const { data } = await useGet('/games/pan/')
+  dataSource.pan = data.value?.data?.isOpen
+  dataSource.mask = data.value?.data?.isMask
+}
+
+// 打开关闭遮罩
+async function changeMask() {
+  const { data } = await useMyFetch('/games/pan/').post({ isMask: !dataSource.mask }).json()
+  try {
+    if (data.value?.code == 0) {
+      dataSource.mask = !dataSource.mask
+      message.success(data.value?.msg || '操作成功！')
+    } else {
+      message.error(data.value?.msg || '操作失败！')
+    }
+  } catch (error) {
+    message.error(data.value?.msg || '操作失败！')
+
+  }
+}
+// 开盘买卖手数 
+async function buySellPan() {
+  const { data } = await useMyFetch('/games/pan/').post(toRaw(buySellInfo)).json()
+  try {
+    if (data.value?.code == 0) {
+      buySellInfo.buyCount = null;
+      buySellInfo.sellCount = null;
+      initData()
+      message.success(data.value?.msg || '操作成功！')
+    } else {
+      message.error(data.value?.msg || '操作失败！')
+    }
+  } catch (error) {
+    message.error(data.value?.msg || '操作失败！')
+
+  }
+}
+// 开闭盘
+async function changePan() {
+  try {
+    const { data } = await useMyFetch('/games/pan/').post({ isOpen: !dataSource.pan }).json()
+    if (data.value?.code == 0) {
+      dataSource.pan = !dataSource.pan
+      message.success(data.value?.msg || '操作成功！')
+    } else {
+      message.error(data.value?.msg || '操作失败！')
+
+    }
+
   } catch (error) {
     message.error('操作失败！')
   }
-
 }
 function initData() {
   noticeeditFn({ type: moduleType.info })
@@ -304,14 +454,24 @@ function initData() {
   noticeeditFn({ type: moduleType.question })
   predictionFn()
   klineFn()
+  getStageList()
+  getPanInfo()
 }
 onMounted(() => {
   initData()
 })
+// 数组根据长度分成若干份
+function splitArrayIntoChunks(array, chunkSize) {
+  const result = [];
+  for (let i = 0; i < array.length; i += chunkSize) {
+    result.push(array.slice(i, i + chunkSize));
+  }
+  return result;
+}
 </script>
 <style lang="less" scoped>
 .height {
-  height: 250px;
+  height: 160px;
 }
 
 .card {
@@ -321,12 +481,16 @@ onMounted(() => {
   height: 100%;
 
   &.active {
-    background: #33353e;
+    background: #EFC39433;
     border: 1px solid #efc394;
   }
 
   &.dark {
     background: #33353e;
+  }
+
+  &.noPadding {
+    padding: 0;
   }
 }
 
@@ -377,12 +541,12 @@ onMounted(() => {
   font-size: 32px;
   line-height: 38px;
   height: 124px;
-  width: 428px;
+  width: 180px;
 }
 
 .curVal-num {
   height: 48px;
-  width: 428px;
+  width: 326px;
   margin-bottom: 21px;
   margin-top: 4px;
 }
@@ -416,6 +580,20 @@ onMounted(() => {
 
   &_number {
     width: 105px;
+  }
+}
+
+.question {
+  height: 40px;
+  padding: 4px 16px;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  &:hover {
+    background: fade(#474951, 60%);
+    color: #EFC394FF;
   }
 }
 </style>

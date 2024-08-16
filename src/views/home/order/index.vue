@@ -2,12 +2,15 @@
   <div class="box">
     <!-- header -->
     <div class="header">
-      <scheduleElm :dataSource="dataSource"/>
+      <scheduleElm :dataSource="dataSource" />
     </div>
     <!-- list  -->
     <div class="list">
-      <div class="list_header">玩家预测</div>
-      <div class="flex">
+      <div class="list_header">
+        <div> 玩家预测</div>
+        <div>参与人数：{{ dataSource.personCount }}</div>
+      </div>
+      <div class="flex h-full">
         <div class="order">
           <div class="order_header">
             <div class="order_header_name">玩家编号</div>
@@ -18,7 +21,8 @@
               <div class="name">{{ item.user_id }}</div>
               <div class="price">{{ item.prediction }}</div>
             </div>
-            <Empty v-if="listLeft.length == 0" :style="{ marginBlock: '0px', paddingTop: '320px' }" :image="Empty.PRESENTED_IMAGE_SIMPLE" />
+            <Empty v-if="listLeft.length == 0" :style="{ marginBlock: '0px', paddingTop: '320px' }"
+              :image="Empty.PRESENTED_IMAGE_SIMPLE" />
           </div>
         </div>
         <div class="order">
@@ -31,7 +35,8 @@
               <div class="name">{{ item.user_id }}</div>
               <div class="price">{{ item.prediction }}</div>
             </div>
-            <Empty v-if="listRight.length == 0" :style="{ marginBlock: '0px', paddingTop: '320px' }" :image="Empty.PRESENTED_IMAGE_SIMPLE" />
+            <Empty v-if="listRight.length == 0" :style="{ marginBlock: '0px', paddingTop: '320px' }"
+              :image="Empty.PRESENTED_IMAGE_SIMPLE" />
           </div>
         </div>
       </div>
@@ -62,7 +67,7 @@ const listRight = computed(() => {
 </script>
 <style lang="less" scoped>
 .box {
-  width: 360px;
+  min-width: 360px;
   padding-right: 4px;
   border-left: 1px solid #473a2c;
 }
@@ -77,9 +82,10 @@ const listRight = computed(() => {
 }
 
 .list {
+  height: calc(100% - 200px);
   border-top: 1px solid #473a2c;
   border-right: 1px solid #473a2c;
-  border-bottom: 1px solid #473a2c;
+  // border-bottom: 1px solid #473a2c;
 
   &_header {
     height: 28px;
@@ -87,8 +93,10 @@ const listRight = computed(() => {
     font-size: 14px;
     color: rgba(255, 255, 255, 0.8);
     line-height: 28px;
-    text-align: center;
-
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 16px;
     background: #101014;
   }
 }
@@ -117,11 +125,13 @@ const listRight = computed(() => {
 
   &_list {
     overflow: auto;
-    height: 780px;
+    height: 100%;
+    min-height: 780px;
     background: #101014;
+
     &::-webkit-scrollbar {
-  display: none;
-}
+      display: none;
+    }
   }
 }
 
@@ -145,5 +155,4 @@ const listRight = computed(() => {
       color: #20b26c;
     }
   }
-}
-</style>
+}</style>

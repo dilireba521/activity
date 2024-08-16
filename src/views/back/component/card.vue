@@ -1,27 +1,24 @@
 <template>
   <div class="box">
-    <div class="title">{{ title }}</div>
+    <div class="flex justify-between items-center mb-16">
+      <div class="title">
+        {{ title }}
+      </div>
+      <div v-if="record?.isSend && record?.isSend != 0"
+        :class="[record?.isSend == 2 && 'text-green', record?.isSend == 1 && 'text-red']">
+        {{
+          record?.isSend == 1 ? '当前发布' : record?.isSend == 2 ? '已发布' : ''
+        }}</div>
+    </div>
+
     <div class="detail">
       <slot v-if="slotDefault"></slot>
-      <div v-else>{{ detail }}</div>
+      <template v-else>{{ detail }}</template>
     </div>
     <div class="btns">
-      <Button
-        size="small"
-        class="info-btn btn"
-        type="primary"
-        @click="handleClick({ action: 'delete' })"
-        >删除</Button
-      >
+      <Button size="small" class="info-btn btn" type="primary" @click="handleClick({ action: 'delete' })">删除</Button>
       <div class="flex">
-        <Button
-          class="btn"
-          size="small"
-          type="primary"
-          danger
-          @click="handleClick({ action: 'edit' })"
-          >编辑</Button
-        >
+        <Button class="btn" size="small" type="primary" danger @click="handleClick({ action: 'edit' })">编辑</Button>
         <Button v-if="hasCancel" class="btn" size="small" type="primary" @click="handleClick({ action: 'cancel' })">
           <div class="text-black">取消发布</div>
         </Button>
@@ -64,34 +61,46 @@ const slotDefault = !!useSlots().default
   height: 28px;
   line-height: 26px;
   text-align: center;
-  & + & {
+
+  &+& {
     margin-left: 12px;
   }
 }
+
 .info-btn {
   background: #696969;
+
   &:hover {
     background: rgba(105, 105, 105, 0.8);
   }
 }
+
 .box {
   width: 100%;
   color: #ffffff;
   display: flex;
   flex-direction: column;
   height: 100%;
+
   .title {
     font-size: 24px;
     line-height: 32px;
-    padding-bottom: 16px;
   }
+
   .detail {
     font-weight: 400;
     font-size: 16px;
-    line-height: 24px;
+    // line-height: 24px;
+    height: 48px;
     flex: 1;
     word-break: break-all;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
   }
+
   .btns {
     display: flex;
     justify-content: space-between;

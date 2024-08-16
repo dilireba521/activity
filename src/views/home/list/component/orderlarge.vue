@@ -31,8 +31,9 @@ const props = defineProps({
 .box {
   background: #101014;
   border-top: 1px solid #473a2c;
-  border-bottom: 1px solid #473a2c;
-  height: 276px;
+  // border-bottom: 1px solid #473a2c;
+  min-height: 300px;
+  height: calc(100% - 736px);
   padding: 0 4px;
 }
 
@@ -66,14 +67,14 @@ const props = defineProps({
   }
 
   &_price {
-    width: 50px;
+    width: 20%;
     text-align: right;
-    margin-right: 20px;
+    margin-right: 8%;
   }
-
   &_number {
     flex: 1;
     text-align: right;
+    padding-right: 1.6%;
   }
 }
 </style>

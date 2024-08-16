@@ -2,7 +2,7 @@
   <div :class="['box', type == 'buy' && 'active']">
     <div class="rank" v-for="(item, i) in dataSource" :key="i">
       <div class="ran'k_name">{{ item.name }}</div>
-      <div :class="['rank_price',type == 'buy'? 'text-green':'text-red']">{{ item.price }}</div>
+      <div :class="['rank_price',type == 'buy'? 'text-red':'text-green']">{{ item.price }}</div>
       <div class="rank_number text-green-1">{{ item.number }}</div>
     </div>
   </div>
@@ -31,8 +31,12 @@ const props = defineProps({
   font-size: 18px;
   color: rgba(255, 255, 255, 0.49);
   line-height: 24px;
+  display: flex;
+  justify-content: end;
+  flex-direction: column;
   &.active {
     background: rgba(255, 82, 96, 0.1);
+    justify-content: start;
   }
 }
 .rank {
@@ -41,12 +45,13 @@ const props = defineProps({
     width: 50px;
   }
   &_price {
-    width: 100px;
+    flex: 1;
     text-align: right;
   }
   &_number {
-    width: 100px;
-    text-align: right;
+    flex: 1;
+    padding-left: 20%;
+    text-align: left;
   }
 }
 </style>

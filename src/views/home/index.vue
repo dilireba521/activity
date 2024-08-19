@@ -202,6 +202,7 @@ window.addEventListener('beforeunload', function () {
   // background: #101014;
   border-bottom: 1px solid #473a2c;
   overflow: hidden;
+  margin-right: 4px;
 }
 
 .answer {

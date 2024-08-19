@@ -8,7 +8,7 @@
     <div class="list">
       <div class="list_header">
         <div> 玩家预测</div>
-        <div>参与人数：{{ dataSource.personCount }}</div>
+        <div>参与人数：{{ dataSource?.personCount }}</div>
       </div>
       <div class="flex h-full">
         <div class="order">
@@ -68,7 +68,7 @@ const listRight = computed(() => {
 <style lang="less" scoped>
 .box {
   min-width: 360px;
-  padding-right: 4px;
+  // padding-right: 4px;
   border-left: 1px solid #473a2c;
 }
 

@@ -86,9 +86,10 @@ function reloadData() {
   // console.log(_arr, _arr1)
 
 }
-useIntervalCustom(reloadData, { delay: 5000 })
+useIntervalCustom(reloadData, { delay: 10000 })
 
 watch(() => props.dataSource, (cur) => {
+  // console.log(cur);
   if (cur?.trade) {
     orderData.value = cur.trade.map(item => {
       return {
@@ -109,7 +110,7 @@ watch(() => props.dataSource, (cur) => {
       }
     }).slice(0, 12)
   }
-  if (cur?.pan?.sell) {
+  if (cur?.pan?.sell || cur?.mask || cur?.info?.zl == 0) {
     isRandom = false
   } else {
     isRandom = true

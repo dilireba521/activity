@@ -1,5 +1,5 @@
 <template>
-  <div v-if="showMask" class="mask">
+  <div v-show="showMask" class="mask">
     <div class="mask-cont">
       <div>当前时间：{{ format }}</div>
       <div class="mt-8 text-yellow">
@@ -22,19 +22,19 @@ import Logo from '@/assets/logo.svg'
 
 const { timestamp, pause, resume } = useTimestamp({ controls: true })
 const format = useDateFormat(timestamp, 'YYYY年MM月DD日 HH:mm:ss')
-const begin = '2024-09-22 17:00:00'
+const begin = '2024-08-28 17:00:00'
 const beginValue = useDateFormat(begin, 'YYYY年MM月DD日 HH:mm:ss')
 const beginTime = new Date(begin).getTime()
-const begin2 = '2024-09-22 19:00:00'
+const begin2 = '2024-08-28 19:00:00'
 const begin2Time = new Date(begin2).getTime()
 
-const end = '2024-09-22 21:00:00'
+const end = '2024-08-28 21:00:00'
 const endValue = useDateFormat(end, 'YYYY年MM月DD日 HH:mm:ss')
 const endTime = new Date(end).getTime()
 
 const showMask = ref(true)
 const diffTime = computed(() => {
-  const _time = isEnd ? endTime : beginTime
+  const _time = (isEnd.value ? endTime : beginTime)
   return diffTime2(_time, timestamp.value)
 })
 

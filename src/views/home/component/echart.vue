@@ -99,8 +99,8 @@ function initData() {
     dataZoom: [{
       type: 'inside',
       start: 90,
-      minValueSpan: 32,
-      maxValueSpan: 40
+      minValueSpan: 55,
+      maxValueSpan: 55,
     }],
     grid: {
       left: '2%',

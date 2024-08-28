@@ -1,9 +1,9 @@
 <template>
   <Modal width="430px" :closable="false" v-model:open="open" title="预测修改">
-    <Form ref="formRef" v-bind="formItemLayout" :model="formState"  class="form">
+    <Form ref="formRef" v-bind="formItemLayout" :model="formState" class="form">
       <Form.Item label="玩家编号">{{ formState.user_id }}</Form.Item>
       <Form.Item label="当前预测">{{ formState.predictionOld }}</Form.Item>
-      <Form.Item  name="prediction"  :required="true" label="预测修改">
+      <Form.Item name="prediction" :required="true" label="预测修改">
         <Input type="number" v-model:value="formState.prediction" placeholder="请输入" />
       </Form.Item>
     </Form>
@@ -67,7 +67,7 @@ function onSubmit() {
     .then(() => {
       console.log('values', formState, toRaw(formState));
       const _params = {
-        type:'change',
+        type: 'change',
         ...toRaw(formState)
       }
       postPredictionFn(_params)
@@ -78,11 +78,22 @@ function onSubmit() {
 }
 async function postPredictionFn(params) {
   loading.value = true
-  const { data } = await useMyFetch('/games/prediction/').post(params).json()
-  loading.value = false
-  open.value = false
-  message.success('操作成功！')
-  emit('success')
+  try {
+    const { data } = await useMyFetch('/games/prediction/').post(params).json()
+    if (data.value.code == 0) {
+      open.value = false
+      message.success('操作成功！')
+      emit('success')
+    } else {
+      message.error(data.value.msg || '操作失败！')
+    }
+
+  } finally {
+    loading.value = false
+  }
+
+
+
 }
 function close() {
   open.value = false

@@ -48,8 +48,8 @@
       <div class="flex flex-col">
         <div style="width: 260px" class="flex items-center justify-center mr-16 card single cursor-pointer">
           <Dropdown>
-            <div>
-              {{ curStage }}
+            <div class="flex w-full">
+              <div class="flex-1 overflow-ellipsis"> {{ curStage }}</div>
               <DownOutlined />
             </div>
             <template #overlay>

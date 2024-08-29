@@ -110,7 +110,7 @@ watch(() => props.dataSource, (cur) => {
       }
     }).slice(0, 12)
   }
-  if (cur?.pan?.sell || cur?.mask || cur?.info?.zl == 0) {
+  if (!cur?.pan?.isOpen) {
     isRandom = false
   } else {
     isRandom = true

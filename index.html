@@ -13,5 +13,18 @@
   <body>
     <div id="app"></div>
     <script type="module" src="/src/main.js"></script>
+    <script>
+      const realWidth =  document.documentElement.clientWidth || document.body.clientWidth;
+      const realHeight = document.documentElement.clientHeight || document.body.clientHeight
+      const designHeight= 1080;
+      const designWidth = 1920;
+      this.pageScale = {
+        y: realHeight / designHeight,
+        x: realWidth / designWidth
+      }
+      console.log(realWidth, realHeight,pageScale);
+
+      // document.body.style = `transform: scale(${this.pageScale.x}, ${this.pageScale.y});`
+    </script>
   </body>
 </html>

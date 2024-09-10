@@ -148,8 +148,8 @@ watch(() => props.dataSource, (cur) => {
 
       &_value {
         min-width: 50px;
-        font-size: 40px;
-        line-height: 40px;
+        font-size: 52px;
+        line-height: 52px;
       }
 
       &_number {

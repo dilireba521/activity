@@ -10,7 +10,7 @@
       <div class="mr-8 text-third">5分线</div>
       <div class="text-secondary">虾米股份</div>
     </div>
-    <div ref="curEchart" style="height: 80vh;width: 100%;">
+    <div ref="curEchart" style="height: calc(100vh - 280px);width: 100%;">
       <!-- <Empty v-if="!myChart" :style="{ marginBlock: '0px', paddingTop: '320px' }" :image="Empty.PRESENTED_IMAGE_SIMPLE" /> -->
     </div>
   </div>
@@ -170,7 +170,21 @@ function initData() {
             type: [2, 5],
             dashOffset: -5
           }
-        }
+        },
+        // min:function(extent){
+        //   const lenMax = extent.max - target
+        //   const lenMin = target - extent.max
+        //   const len = Math.max(lenMax, lenMin)
+        //   const _min = Math.floor((target - len)/10) * 10
+        //   return _min
+        // },
+        // max:function(extent){
+        //   const lenMax = extent.max - target
+        //   const lenMin = target - extent.max
+        //   const len = Math.max(lenMax, lenMin)
+        //   const _max = Math.ceil((target+len)/10) * 10
+        //   return _max
+        // }
       }
     ],
     series: [

@@ -10,7 +10,7 @@
       <div class="mr-8 text-third">5分线</div>
       <div class="text-secondary">虾米股份</div>
     </div>
-    <div ref="curEchart" style="height: 794px;width: 100%;">
+    <div ref="curEchart" style="height: 80vh;width: 100%;">
       <!-- <Empty v-if="!myChart" :style="{ marginBlock: '0px', paddingTop: '320px' }" :image="Empty.PRESENTED_IMAGE_SIMPLE" /> -->
     </div>
   </div>

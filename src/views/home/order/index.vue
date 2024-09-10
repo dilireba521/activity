@@ -7,7 +7,7 @@
     <!-- list  -->
     <div class="list">
       <div class="list_header">
-        <div> 玩家预测</div>
+        <div>玩家预测</div>
         <div>参与人数：{{ dataSource?.personCount }}</div>
       </div>
       <div class="flex h-full">
@@ -58,7 +58,7 @@ const currentIndex = computed(() => {
   return props.dataSource?.rank?.findIndex(item => item.user_id == '当前价') || 0
 })
 const listLeft = computed(() => {
-  return props.dataSource?.rank?.slice(0, currentIndex.value) || []
+  return props.dataSource?.rank?.slice(0, currentIndex.value)?.reverse() || []
 })
 const listRight = computed(() => {
   return props.dataSource?.rank?.slice(currentIndex.value + 1) || []

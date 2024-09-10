@@ -1,10 +1,13 @@
 <template>
   <div class="schedule">
     <div class="schedule_time">当前时间：{{ diffTime }}</div>
-    <!-- <div class="schedule_step">当前阶段：{{ dataSource?.stage?.stage || timeList[stage].stage }}</div> -->
-    <!-- <div class="schedule_next">距离{{timeList[stage].stage}}收盘</div> -->
-    <div class="schedule_next">距离下一阶段</div>
-    <div class="schedule_countdown">{{ residue }}</div>
+    <div class="schedule_next">{{
+    isBeginOver ? '距离早盘结束' : 
+    isEndBegin ?'距离晚盘结束' :''
+    }}</div>
+    <div class="schedule_countdown">
+      {{ isBeginOver ? beginOverTime : (isEndBegin && endOverTime)}}
+    </div>
   </div>
 </template>
 <script setup>
@@ -22,14 +25,37 @@ const props = defineProps({
 // const begin = new Date().getTime()
 const timeList = [
   {
-    time:'17:00:00',
+    time:'2024-09-10 19:00:00',
     stage:'早盘'
   },{
-    time:'22:00:00',
+    time:'2024-09-10 21:00:00',
+    stage:'晚盘开始'
+  },{
+    time:'2024-09-10 22:30:00',
     stage:'晚盘'
   }
 ]
 const { timestamp } = useTimestamp({ controls: true, interval: 1000 })
+
+const isBeginOver = computed(()=> {
+  const _time = new Date(timeList[0]?.time).getTime() - timestamp.value ;
+  return _time > 0
+})
+
+const beginOverTime = computed(()=> {
+  const _time = new Date(timeList[0]?.time).getTime() - timestamp.value ;
+  return diffTime2(timestamp.value + _time, timestamp.value) || "00:00:00"
+})
+
+const isEndBegin = computed(()=> {
+  const _time = new Date(timeList[1]?.time).getTime() - timestamp.value ;
+  return _time  > 0
+})
+
+const endOverTime = computed(()=> {
+  const _time = new Date(timeList[2]?.time).getTime() - timestamp.value ;
+  return diffTime2(timestamp.value + _time, timestamp.value) || "00:00:00"
+})
 
 const stage = computed(() => {
   const _day = formatToDate(new Date())
@@ -37,12 +63,10 @@ const stage = computed(() => {
   const _target = dayjs(_day + timeList[0].time)
   return _now < _target ? 0 : 1
 })
-const residue = computed(() => {
-  const _residue = props?.dataSource?.stage?.residue * 1000
-  // const _day = formatToDate(timestamp.value)
-  // const _target = dayjs(_day + timeList[stage.value || 0]?.time)
-  return diffTime2(timestamp.value + _residue, timestamp.value) || "00:00:00"
-})
+// const residue = computed(() => {
+//   const _residue = props?.dataSource?.stage?.residue * 1000
+//   return diffTime2(timestamp.value + _residue, timestamp.value) || "00:00:00"
+// })
 const diffTime = computed(() => {
   // return diffTime2(timestamp.value, begin)
   return formatToTime(timestamp.value)

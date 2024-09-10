@@ -62,9 +62,22 @@
           </Dropdown>
         </div>
         <Popconfirm placement="bottom" :title="['是否' + (dataSource.pan ? '闭' : '开') + '盘?']" @confirm="changePan">
-          <div class="mt-8 flex items-center justify-center mr-16 card single  cursor-pointer">
-            {{ dataSource.pan ? "开盘" : "闭盘" }}
+          <Segmented class="mt-8 mr-16" size="large" :value="Number(dataSource.pan)" block :options="[{
+            label:'闭盘',
+            value: 0,
+          },{
+            label:'开盘',
+            value: 1,
+          }]">
+        <template #label="{value}">
+          <div>
+            44{{ value }}
           </div>
+        </template>  
+        </Segmented>
+          <!-- <div class="mt-8 flex items-center justify-center mr-16 card single  cursor-pointer">
+            {{ dataSource.pan ? "闭盘" : "开盘" }}
+          </div> -->
         </Popconfirm>
       </div>
 
@@ -200,7 +213,7 @@ import scheduleElm from '@/views/home/order/component/schedule.vue'
 import cardElm from './component/card.vue'
 import addIcon from '@/assets/add.svg'
 import PanelElm from './component/panel.vue'
-import { Button, Tooltip, Input, InputNumber, Textarea, Row, Col, message, Checkbox, Popconfirm, Dropdown, Menu } from 'ant-design-vue'
+import { Button, Tooltip, Input, InputNumber, Textarea, Row, Col, message, Checkbox, Popconfirm, Dropdown, Menu, Segmented } from 'ant-design-vue'
 import { DownOutlined } from '@ant-design/icons-vue'
 import editForecast from './component/editForecast.vue'
 import editInfo from './component/editInfo.vue'
@@ -239,6 +252,7 @@ const dataSource = reactive({
 const buySellInfo = reactive({
   buyCount: null,
   sellCount: null,
+  type: 'trade'
 })
 const editType = ref(moduleType.info)
 // 当前价格

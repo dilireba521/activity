@@ -28,7 +28,7 @@
                 dataSource?.question?.content }}</div>
             </Panel>
             <Panel icon="answer" class="flex-1" title="选项">
-              <div v-if="dataSource?.question?.options" class="flex items-center h-full">
+              <div v-if="dataSource?.question?.options" class="flex items-center justify-center h-full">
                 <div class="answer">
                   <div v-for="(item, i) in dataSource?.question?.options" :key="item.id" class="answer-item">
                     <div :class="['answer-item_cont', item.isAnswer && 'active']">
@@ -209,22 +209,22 @@ window.addEventListener('beforeunload', function () {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 80%;
+  // width: 80%;
   min-height: 65%;
   flex-wrap: wrap;
   margin: 0 auto;
 
   &-item {
-    width: 50%;
+    width: 45%;
     flex-shrink: 0;
     margin-bottom: 4px;
-
+    // text-align: center;
     &_cont {
       display: inline-block;
       line-height: 46px;
-      padding: 0 20px;
+      // padding: 0 20px;
       height: 48px;
-      font-size: 20px;
+      font-size: 32px;
 
       border-radius: 4px;
 

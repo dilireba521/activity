@@ -86,7 +86,7 @@ function reloadData() {
   // console.log(_arr, _arr1)
 
 }
-useIntervalCustom(reloadData, { delay: 10000 })
+useIntervalCustom(reloadData, { delay: 1000 })
 
 watch(() => props.dataSource, (cur) => {
   // console.log(cur);
@@ -129,6 +129,7 @@ watch(() => props.dataSource, (cur) => {
     border-top: 1px solid #473a2c;
     border-bottom: 1px solid #473a2c;
     text-align: center;
+    background-color: #101014;
     &-name {
       font-weight: 500;
       font-size: 24px;

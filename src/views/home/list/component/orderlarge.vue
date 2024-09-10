@@ -3,6 +3,8 @@
     <div class="title">大额买卖</div>
     <template v-if="dataSource?.length > 0">
       <div :class="['item',
+        item.type == '竞价买入' && 'red',
+        item.type == '竞价卖出' && 'green',
         item.type == '极速拉升' && 'red',
         item.type == '猛烈打压' && 'origin',
         item.type == '大笔卖出' && 'green'

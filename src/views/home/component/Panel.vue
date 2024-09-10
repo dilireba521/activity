@@ -5,7 +5,9 @@
       {{ title }}
     </div>
     <div class="panel-body">
-      <slot></slot>
+      <div class="panel-body_msg">
+        <slot></slot>
+      </div>
     </div>
   </div>
 </template>
@@ -48,7 +50,7 @@ const curIcon = computed(() => {
   &-header {
     font-weight: 500;
     font-size: 14px;
-    color: rgba(255, 255, 255, 0.8);
+    color: #fff;
     line-height: 20px;
     height: 28px;
     padding: 4px 12px;
@@ -59,10 +61,15 @@ const curIcon = computed(() => {
     }
   }
   &-body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     height: 170px;
+    color: #fff;
     // padding: 16px;
-    font-size: 20px;
-    line-height: 28px;
+    font-size: 36px;
+    line-height: 1.1;
+    // text-align: center;
   }
 }
 </style>

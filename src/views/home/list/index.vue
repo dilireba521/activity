@@ -76,7 +76,7 @@ function reloadData() {
     }
     _arr1.push({
       name: '买' + i,
-      price: _price < 0 ? 0 : _price,
+      price: _price,
       number: _number
     })
   }

@@ -125,7 +125,7 @@ watch(() => props.dataSource, (cur) => {
   // background: #101014;
 
   .header {
-    padding: 10px 32px 4px 32px;
+    padding: 10px 16px 4px 16px;
     border-top: 1px solid #473a2c;
     border-bottom: 1px solid #473a2c;
     text-align: center;
@@ -135,13 +135,14 @@ watch(() => props.dataSource, (cur) => {
       font-size: 24px;
       color: #efc394;
       line-height: 28px;
+      text-align: left;
     }
 
     &-msg {
       display: flex;
       font-family: Roboto, Roboto;
       align-items: self-end;
-      justify-content: center;
+      // justify-content: center;
       color: #ff5260;
       font-size: 16px;
       line-height: 22px;
@@ -150,6 +151,7 @@ watch(() => props.dataSource, (cur) => {
         min-width: 50px;
         font-size: 52px;
         line-height: 52px;
+        text-align: left;
       }
 
       &_number {

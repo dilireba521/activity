@@ -6,7 +6,7 @@
     isEndBegin ?'距离晚盘结束' :''
     }}</div>
     <div class="schedule_countdown">
-      {{ isBeginOver ? beginOverTime : (isEndBegin && endOverTime)}}
+      {{ isBeginOver ? beginOverTime : (isEndBegin ? endOverTime :'--')}}
     </div>
   </div>
 </template>
@@ -25,13 +25,13 @@ const props = defineProps({
 // const begin = new Date().getTime()
 const timeList = [
   {
-    time:'2024-09-10 19:00:00',
+    time:'2024-09-11 19:00:00',
     stage:'早盘'
   },{
-    time:'2024-09-10 21:00:00',
+    time:'2024-09-11 21:00:00',
     stage:'晚盘开始'
   },{
-    time:'2024-09-10 22:30:00',
+    time:'2024-09-11 22:00:00',
     stage:'晚盘'
   }
 ]

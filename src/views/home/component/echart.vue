@@ -93,7 +93,7 @@ function initData() {
 
     myChart = echarts?.init(curEchart.value)
   }
-  // const target = props.value
+  const target = props.value
   const _datax = [], _data = [];
   props.dataSource?.forEach((item) => {
     const _time = useDateFormat(item.create_time, 'HH:mm')
@@ -176,20 +176,20 @@ function initData() {
             dashOffset: -5
           }
         },
-        // min:function(extent){
-        //   const lenMax = extent.max - target
-        //   const lenMin = target - extent.max
-        //   const len = Math.max(lenMax, lenMin)
-        //   const _min = Math.floor((target - len)/10) * 10
-        //   return _min
-        // },
-        // max:function(extent){
-        //   const lenMax = extent.max - target
-        //   const lenMin = target - extent.max
-        //   const len = Math.max(lenMax, lenMin)
-        //   const _max = Math.ceil((target+len)/10) * 10
-        //   return _max
-        // }
+        min:function(extent){
+          const lenMax = extent.max - target
+          const lenMin = target - extent.min
+          const len = Math.max(lenMax, lenMin)
+          const _min = Math.floor((target - len)/10) * 10
+          return _min
+        },
+        max:function(extent){
+          const lenMax = extent.max - target
+          const lenMin = target - extent.min
+          const len = Math.max(lenMax, lenMin)
+          const _max = Math.ceil((target+len)/10) * 10
+          return _max
+        }
       }
     ],
     series: [

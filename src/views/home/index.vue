@@ -40,13 +40,13 @@
             </Panel>
           </div>
           <div>
-            <EchartElm :value="dataSource?.info?.now || 216" :dataSource="kline" />
+            <EchartElm :value="dataSource?.info?.now" :dataSource="kline" />
           </div>
         </div>
         <!-- <div class="shrink-0"> -->
-        <listElm style="width: 13%;" class="shrink-0" :dataSource="dataSource" />
+        <listElm style="width: 15%;" class="shrink-0" :dataSource="dataSource" />
         <!-- </div> -->
-        <orderElm style="width: 19%;" class="shrink-0" :dataSource="dataSource"></orderElm>
+        <orderElm style="width: 17%;" class="shrink-0" :dataSource="dataSource"></orderElm>
       </div>
     </div>
     <openElm :dataSource="dataSource" />

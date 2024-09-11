@@ -74,14 +74,14 @@ watch(data, (newVal) => {
 
   &-price {
     font-weight: 500;
-    font-size: 36px;
+    font-size: 48px;
     color: #efc394;
     line-height: 48px;
     padding-right: 80px;
   }
 
   &-msg {
-    font-size: 20px;
+    font-size: 24px;
     color: rgba(255, 255, 255, 0.8);
     line-height: 28px;
     display: flex;
@@ -146,14 +146,14 @@ watch(data, (newVal) => {
     line-height: 40px;
     background: #232323;
     padding: 0 12px;
-    font-size: 16px;
+    font-size: 24px;
     margin-bottom: 1px;
     font-family: Roboto, Roboto;
 
     &_rank {
       width: 60px;
       font-weight: bold;
-      font-size: 20px;
+      font-size: 24px;
     }
 
     &_number {

@@ -35,7 +35,7 @@ const props = defineProps({
   border-top: 1px solid #473a2c;
   // border-bottom: 1px solid #473a2c;
   min-height: 300px;
-  height: calc(100vh - 736px);
+  height: calc(100vh - 636px);
   padding: 0 4px;
 }
 

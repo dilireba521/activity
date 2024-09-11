@@ -40,7 +40,7 @@
             </Panel>
           </div>
           <div>
-            <EchartElm :dataSource="kline" />
+            <EchartElm :value="dataSource?.info?.now || 216" :dataSource="kline" />
           </div>
         </div>
         <!-- <div class="shrink-0"> -->

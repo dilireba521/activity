@@ -26,6 +26,10 @@ const props = defineProps({
   dataSource: {
     type: Array,
     default: () => []
+  },
+  value: {
+    type: String,
+    default:''
   }
 })
 
@@ -89,6 +93,7 @@ function initData() {
 
     myChart = echarts?.init(curEchart.value)
   }
+  // const target = props.value
   const _datax = [], _data = [];
   props.dataSource?.forEach((item) => {
     const _time = useDateFormat(item.create_time, 'HH:mm')

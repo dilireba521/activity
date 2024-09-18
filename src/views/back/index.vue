@@ -63,18 +63,18 @@
         </div>
         <Popconfirm placement="bottom" :title="['是否' + (dataSource.pan ? '闭' : '开') + '盘?']" @confirm="changePan">
           <Segmented class="mt-8 mr-16" size="large" :value="Number(dataSource.pan)" block :options="[{
-            label:'闭盘',
+            label: '闭盘',
             value: 0,
-          },{
-            label:'开盘',
+          }, {
+            label: '开盘',
             value: 1,
           }]">
-        <template #label="{value}">
-          <div>
-            44{{ value }}
-          </div>
-        </template>  
-        </Segmented>
+            <template #label="{ value }">
+              <div>
+                44{{ value }}
+              </div>
+            </template>
+          </Segmented>
           <!-- <div class="mt-8 flex items-center justify-center mr-16 card single  cursor-pointer">
             {{ dataSource.pan ? "闭盘" : "开盘" }}
           </div> -->
@@ -144,9 +144,9 @@
     <div class="pt-40">
       <PanelElm title="内幕交易阶段">
         <Row :gutter="[8, 8]">
-          <Col :span="6">
-          <PanelElm type="is-light" title="题库一">
-            <div class="question" v-for="item in dataSource.question" :key="item.id">
+          <Col :span="6" v-for="items, i in splitArrayIntoChunks(dataSource.question, dataSource.length)">
+          <PanelElm type="is-light" :title="'题库' + i">
+            <div class="question" v-for="item in items" :key="item.id">
               <div class="flex">
                 <TextTranslate :options="statusOptions" :value="item.isSend" type="dot"></TextTranslate>
                 <div>{{ item.title }}</div>
@@ -228,6 +228,7 @@ import { statusOptions } from "@/utils/basicOptions"
 const arr = ref()
 const size = 20
 const chunks = ref()
+
 enum moduleType {
   info = '资讯',
   notice = '公告',

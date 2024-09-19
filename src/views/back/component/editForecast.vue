@@ -1,7 +1,10 @@
 <template>
   <Modal width="430px" :closable="false" v-model:open="open" title="预测修改">
     <Form ref="formRef" v-bind="formItemLayout" :model="formState" class="form">
-      <Form.Item label="玩家编号">{{ formState.user_id }}</Form.Item>
+      <Form.Item label="玩家编号">
+        <Input v-model:value="formState.user_id" placeholder="请输入" />
+        <!-- {{ formState.user_id }} -->
+      </Form.Item>
       <Form.Item label="当前预测">{{ formState.predictionOld }}</Form.Item>
       <Form.Item name="prediction" :required="true" label="预测修改">
         <Input type="number" v-model:value="formState.prediction" placeholder="请输入" />
@@ -11,7 +14,7 @@
       <div class="flex justify-center pt-40">
         <Button @click="close">取消</Button>
         <Button :loading="loading" type="primary" @click="onSubmit">
-          <div class="text-black">保存</div>
+          <span class="text-black">保存</span>
         </Button>
       </div>
     </template>
@@ -65,11 +68,13 @@ function onSubmit() {
   formRef.value
     .validate()
     .then(() => {
-      console.log('values', formState, toRaw(formState));
       const _params = {
         type: 'change',
+        id: props.record.id,
         ...toRaw(formState)
       }
+      // console.log('values',_params);
+
       postPredictionFn(_params)
     })
     .catch(error => {

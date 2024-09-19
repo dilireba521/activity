@@ -25,13 +25,13 @@ const props = defineProps({
 // const begin = new Date().getTime()
 const timeList = [
   {
-    time:'2024-09-11 19:00:00',
+    time:'2024-09-19 19:00:00',
     stage:'早盘'
   },{
-    time:'2024-09-11 21:00:00',
+    time:'2024-09-19 21:00:00',
     stage:'晚盘开始'
   },{
-    time:'2024-09-11 22:00:00',
+    time:'2024-09-19 22:00:00',
     stage:'晚盘'
   }
 ]
@@ -49,7 +49,7 @@ const beginOverTime = computed(()=> {
 
 const isEndBegin = computed(()=> {
   const _time = new Date(timeList[1]?.time).getTime() - timestamp.value ;
-  return _time  > 0
+  return _time  < 0
 })
 
 const endOverTime = computed(()=> {

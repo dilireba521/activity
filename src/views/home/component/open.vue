@@ -22,13 +22,13 @@ import Logo from '@/assets/logo.svg'
 
 const { timestamp, pause, resume } = useTimestamp({ controls: true })
 const format = useDateFormat(timestamp, 'YYYY年MM月DD日 HH:mm:ss')
-const begin = '2024-09-11 17:00:00'
+const begin = '2024-09-19 17:00:00'
 const beginValue = useDateFormat(begin, 'YYYY年MM月DD日 HH:mm:ss')
 const beginTime = new Date(begin).getTime()
-const begin2 = '2024-09-11 19:00:00'
+const begin2 = '2024-09-19 19:00:00'
 const begin2Time = new Date(begin2).getTime()
 
-const end = '2024-09-11 21:00:00'
+const end = '2024-09-19 21:00:00'
 const endValue = useDateFormat(end, 'YYYY年MM月DD日 HH:mm:ss')
 const endTime = new Date(end).getTime()
 

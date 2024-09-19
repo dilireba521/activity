@@ -13,11 +13,11 @@
       <div class="layout flex flex-1">
         <div class="flex-1">
           <div v-if="!showQuestion" class="flex">
-            <Panel icon="info" class="flex-1" :title="dataSource?.zx?.title || '资讯'">
+            <Panel icon="info" class="flex-1" :title="dataSource?.zx?.stage || '资讯'">
               <div v-if="dataSource?.zx?.content" class="p-16">{{ dataSource?.zx?.content }}</div>
               <Empty v-else :style="{ marginBlock: '0px', paddingTop: '32px' }" :image="Empty.PRESENTED_IMAGE_SIMPLE" />
             </Panel>
-            <Panel icon="notice" class="flex-1" :title="dataSource?.notice?.title || '公告'">
+            <Panel icon="notice" class="flex-1" :title="dataSource?.notice?.stage || '公告'">
               <div v-if="dataSource?.notice?.content" class="p-16">{{ dataSource?.notice?.content }}</div>
               <Empty v-else :style="{ marginBlock: '0px', paddingTop: '32px' }" :image="Empty.PRESENTED_IMAGE_SIMPLE" />
             </Panel>

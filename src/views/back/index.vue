@@ -108,17 +108,17 @@
     <div class="pt-40">
       <PanelElm title="资讯">
         <Row :gutter="[16, 16]">
-          <Col v-for="items in splitArrayIntoChunks(dataSource.info, dataSource.length)" :span="6">
+          <Col v-for="items in splitArrayIntoChunks(dataSource.info, dataSource.lengthInfo)" :span="6">
           <div class="card dark noPadding">
             <div class="question" v-for="item in items" :key="item.id">
               <div class="flex">
                 <TextTranslate :options="statusOptions" :value="item.isSend" type="dot"></TextTranslate>
                 <div>{{ item.title }}</div>
               </div>
-              <Button style="width: 72px;height: 28px;" @click="handleClick({
+              <Button :disabled="item?.id != 2  && item.isSend != 0  "  style="width: 72px;height: 32px;" @click="handleClick({
                 action: item.isSend == 1 ? 'cancel' : 'submit', type: moduleType.info, record: item
               })" size="small" type="primary">
-                <div class="text-black">{{ item.isSend == 1 ? '取消发布' : '发布' }}</div>
+                <div class="text-black">{{ item.isSend == 1 ? '发布中' : '发布' }}</div>
               </Button>
             </div>
           </div>
@@ -244,6 +244,8 @@ const dataSource = reactive({
   pan: false,
   mask: false,
   length: 10,
+  lengthInfo: 5,
+
 })
 // watch(()=>dataSourceStore.dataSource,(cur)=>{
 //   console.log('cur--', cur);
@@ -332,6 +334,7 @@ async function noticeeditFn(params: any) {
   switch (params.type) {
     case moduleType.info:
       dataSource.info = data.value?.data
+      klineFn()
       break
     case moduleType.notice:
       dataSource.notice = data.value?.data
@@ -599,7 +602,7 @@ function splitArrayIntoChunks(array, chunkSize) {
 }
 
 .question {
-  height: 40px;
+  height: 56px;
   padding: 4px 16px;
   cursor: pointer;
   display: flex;

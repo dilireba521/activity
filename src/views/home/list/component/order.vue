@@ -12,7 +12,7 @@
     </div>
     </template>
     
-    <Empty v-else:style="{ marginBlock: '0px', paddingTop: '320px' }" :image="Empty.PRESENTED_IMAGE_SIMPLE" />
+    <Empty v-else :style="{ marginBlock: '0px', paddingTop: '320px' }" :image="Empty.PRESENTED_IMAGE_SIMPLE" />
 
   </div>
 </template>
@@ -30,7 +30,7 @@ const props = defineProps({
 </script>
 <style lang="less" scoped>
 .box {
-  overflow: auto;
+  overflow: hidden;
   height: 288px;
   background: #101014;
   font-family: Roboto, Roboto;

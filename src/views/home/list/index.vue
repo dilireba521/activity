@@ -108,7 +108,7 @@ watch(() => props.dataSource, (cur) => {
         number: item?.price_change || 0,
         type: item.type
       }
-    }).slice(0, 12)
+    }).slice(0, 20)
   }
   if (!cur?.pan?.isOpen) {
     isRandom = false

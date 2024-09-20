@@ -221,10 +221,10 @@ window.addEventListener('beforeunload', function () {
     // text-align: center;
     &_cont {
       display: inline-block;
-      line-height: 46px;
+      line-height: 42px;
       // padding: 0 20px;
       height: 48px;
-      font-size: 32px;
+      font-size: 28px;
 
       border-radius: 4px;
 

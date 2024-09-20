@@ -145,7 +145,7 @@
       <PanelElm title="内幕交易阶段">
         <Row :gutter="[8, 8]">
           <Col :span="6" v-for="items, i in splitArrayIntoChunks(dataSource.question, dataSource.length)">
-          <PanelElm type="is-light" :title="'题库' + i">
+          <PanelElm type="is-light" :title="items?.[0]?.stage">
             <div class="question" v-for="item in items" :key="item.id">
               <div class="flex">
                 <TextTranslate :options="statusOptions" :value="item.isSend" type="dot"></TextTranslate>

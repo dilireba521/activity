@@ -95,12 +95,13 @@ const { status, data, send, open, close } = useWebSocket(env.VITE_GLOB_WEBSOCKET
     console.log('WebSocket onConnected', ws)
   },
   onError: (ws, event) => {
+    close()
     console.log('WebSocket onError', ws, event)
   },
-  // onDisconnected: (ws,event) => {
-  //   // close()
-  //   console.error('onDisconnected 发生错误:', ws,event)
-  // },
+  onDisconnected: (ws,event) => {
+    close()
+    console.error('onDisconnected 发生错误:', ws,event)
+  },
 })
 
 

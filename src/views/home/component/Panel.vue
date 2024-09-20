@@ -67,7 +67,7 @@ const curIcon = computed(() => {
     height: 170px;
     color: #fff;
     // padding: 16px;
-    font-size: 36px;
+    font-size: 32px;
     line-height: 1.1;
     // text-align: center;
   }

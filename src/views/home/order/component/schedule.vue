@@ -1,6 +1,6 @@
 <template>
   <div class="schedule">
-    <div class="schedule_time">当前时间：{{ diffTime }}</div>
+    <div class="schedule_time">当前时间:{{ diffTime }}</div>
     <div class="schedule_next">{{
     isBeginOver ? '距离早盘结束' : 
     isEndBegin ?'距离晚盘结束' :''
@@ -25,13 +25,13 @@ const props = defineProps({
 // const begin = new Date().getTime()
 const timeList = [
   {
-    time:'2024-09-19 19:00:00',
+    time:'2024-09-22 19:00:00',
     stage:'早盘'
   },{
-    time:'2024-09-19 21:00:00',
+    time:'2024-09-22 21:00:00',
     stage:'晚盘开始'
   },{
-    time:'2024-09-19 22:00:00',
+    time:'2024-09-22 22:00:00',
     stage:'晚盘'
   }
 ]
